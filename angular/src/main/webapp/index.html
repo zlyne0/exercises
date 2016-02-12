@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ads</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>		
+</head>
+	
+<body>
+	
+	<b>ads</b>
+	<div ng-app="adsApp" ng-controller="adsController">
+
+<form name="newAdForm">
+
+Name:<br>
+<input name="name" type="text" ng-model="newAd.name" required><br>
+<span ng-show="newAdForm.name.$touched && newAdForm.name.$invalid">The name is required.</span>
+<br>
+
+Description:<br>
+<input name="description" type="text" ng-model="newAd.description" required><br>
+<span ng-show="newAdForm.description.$touched && newAdForm.description.$invalid">The description is required.</span>
+<br>
+
+<p>
+  <input 
+  type="submit"
+  ng-click="saveNewAd()"
+  ng-disabled="adsApp.name.$dirty && adsApp.name.$invalid || adsApp.description.$dirty && adsApp.description.$invalid">
+</p>
+
+<button ng-click="saveNewAd()" ng-disabled="adsApp.name.$dirty && adsApp.name.$invalid || adsApp.description.$dirty && adsApp.description.$invalid">save</button>
+</form>
+
+
+		<table class="table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="ad in ads">
+					<td>{{ ad.name }}</td>
+					<td>{{ ad.description }}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>	
+	
+<script>
+	var app = angular.module('adsApp', []);
+	app.controller('adsController', function($scope, $http) {
+		$scope.saveNewAd = function() {
+			alert('save new ad ' + $scope.newAd.name + ', desc ' + $scope.newAd.description);
+		};
+		$http.get("ads/rest/list").then(function(response) {
+			$scope.ads = response.data;
+		});
+	});
+</script>	
+	
+</body>
+</html>
