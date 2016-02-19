@@ -15,7 +15,7 @@
 	<b>ads</b>
 	<div ng-app="adsApp" ng-controller="adsController">
 
-<form name="newAdForm">
+<form name="newAdForm" ng-submit="saveNewAd()">
 
 Name:<br>
 <input name="name" type="text" ng-model="newAd.name" required><br>
@@ -28,13 +28,11 @@ Description:<br>
 <br>
 
 <p>
-  <input 
-  type="submit"
-  ng-click="saveNewAd()"
-  ng-disabled="adsApp.name.$dirty && adsApp.name.$invalid || adsApp.description.$dirty && adsApp.description.$invalid">
+	<input 
+		type="submit"
+		ng-disabled="adsApp.name.$dirty && adsApp.name.$invalid || adsApp.description.$dirty && adsApp.description.$invalid">
 </p>
 
-<button ng-click="saveNewAd()" ng-disabled="adsApp.name.$dirty && adsApp.name.$invalid || adsApp.description.$dirty && adsApp.description.$invalid">save</button>
 </form>
 
 
@@ -52,18 +50,34 @@ Description:<br>
 				</tr>
 			</tbody>
 		</table>
+
+<pre>form = {{newAd | json}}</pre>	
 		
 	</div>	
 	
+	
 <script>
-	var app = angular.module('adsApp', []);
-	app.controller('adsController', function($scope, $http) {
-		$scope.saveNewAd = function() {
-			alert('save new ad ' + $scope.newAd.name + ', desc ' + $scope.newAd.description);
-		};
+
+	function loadAdsList($scope, $http) {
 		$http.get("ads/rest/list").then(function(response) {
 			$scope.ads = response.data;
 		});
+	}
+
+	function createNewAd($scope, $http) {
+		var data = $scope.newAd;
+		$http.post("ads/rest/create", data);
+
+		loadAdsList($scope, $http);
+	}
+	
+	var app = angular.module('adsApp', []);
+	app.controller('adsController', function($scope, $http) {
+		$scope.saveNewAd = function() {
+			createNewAd($scope, $http);
+		};
+		
+		loadAdsList($scope, $http);
 	});
 </script>	
 	
