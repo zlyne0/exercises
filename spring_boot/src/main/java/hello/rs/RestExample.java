@@ -18,7 +18,7 @@ public class RestExample {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-    @RequestMapping("/")
+    @RequestMapping("/hello")
     String home() {
 		log.info("Customers found with findAll():");
 		log.info("-------------------------------");

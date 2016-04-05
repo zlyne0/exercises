@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +19,9 @@ import hello.rs.RestExample;
 
 @Configuration
 @EnableAutoConfiguration
-@EnableJpaRepositories
-@ComponentScan(basePackages="hello")
+@EnableJpaRepositories(basePackages={"promitech.web_angular_exp", "hello"})
+@EntityScan(basePackages={"promitech.web_angular_exp.model", "hello"})
+@ComponentScan(basePackages={"promitech.web_angular_exp", "hello"})
 public class Example {
 
     public static void main(String[] args) throws Exception {

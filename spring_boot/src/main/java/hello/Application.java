@@ -7,14 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class Application {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-	public static void mainn(String[] args) {
-		SpringApplication.run(Application.class);
-	}
+//	public static void mainn(String[] args) {
+//		SpringApplication.run(Application.class);
+//	}
 /*
 	@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
