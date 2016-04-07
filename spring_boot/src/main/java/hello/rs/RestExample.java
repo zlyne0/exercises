@@ -27,7 +27,7 @@ public class RestExample {
 		}
         log.info("");
     	
-        return "Hello World!";
+        return "Hello World! żźóŻŹĆ";
     }
    
 }

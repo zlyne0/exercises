@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import promitech.web_angular_exp.json.ProductJSON;
 import promitech.web_angular_exp.model.Product;
 
 @RestController
@@ -20,14 +21,11 @@ public class ProductRest {
     @Autowired
     private ProductRepository productRepository;
     
-    @RequestMapping("/products")
-    public List<Product> products() {
-        List<Product> products = new ArrayList<Product>();
-        
-        System.out.println("products = " + products.size());
-        
+    @RequestMapping("/product/list")
+    public List<ProductJSON> products() {
+        List<ProductJSON> products = new ArrayList<ProductJSON>();
         for (Product product : productRepository.findAll()) {
-            products.add(product);
+            products.add(new ProductJSON(product));
         }
         return products;
     }
