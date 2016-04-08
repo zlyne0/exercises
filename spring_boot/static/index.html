@@ -31,11 +31,34 @@
 		</tbody>
 	</table>
 	selected: {{ selectedProductId }}
+	
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Value</th>
+					<th>big value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="param in productParameters">
+					<td>{{ param.id }}</td>
+					<td>{{ param.type.name }}</td>
+					<td>{{ param.value }}</td>
+					<td>{{ param.bigValue }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
 </div>
 	
 <script charset="UTF-8">
 function loadProductsList($scope, $http) {
 	$scope.selectedProductId = null;
+	$scope.productParameters = [];
 	
 	$http.get("rest/product/list").then(function(response) {
 		$scope.products = response.data;
@@ -50,9 +73,12 @@ app.controller('productParametersController', function($scope, $http) {
 	
 	loadProductsList($scope, $http);
 	
-	
 	$scope.setSelectedProduct = function(productId) {
 		$scope.selectedProductId = productId;
+		
+		$http.get("rest/product/" + productId + "/parameters").then(function(response) {
+			$scope.productParameters = response.data;
+		});
 	}
 });
 </script>
