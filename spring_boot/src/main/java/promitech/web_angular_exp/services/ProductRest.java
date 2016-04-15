@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import promitech.web_angular_exp.json.ProductJSON;
 import promitech.web_angular_exp.json.ProductParameterJSON;
+import promitech.web_angular_exp.json.ProductParameterTypeJSON;
+import promitech.web_angular_exp.model.ProductParameterType;
 
 @RestController
 @RequestMapping("/rest")
@@ -22,6 +24,9 @@ public class ProductRest {
     
     @Autowired
     private ProductRepository productRepository;
+    
+    @Autowired
+    private ProductParameterTypeRepository productParameterTypeRepository;
     
     @RequestMapping("/product/list")
     public List<ProductJSON> products() {
@@ -35,6 +40,13 @@ public class ProductRest {
         return productRepository.findParametersByProductId(productId)
             .stream()
             .map(ProductParameterJSON::new)
+            .collect(Collectors.toList());
+    }
+    
+    @RequestMapping("/parameterType/list")
+    public List<ProductParameterTypeJSON> parameterTypes() {
+        return StreamSupport.stream(productParameterTypeRepository.findAll().spliterator(), false)
+            .map(ProductParameterTypeJSON::new)
             .collect(Collectors.toList());
     }
 }

@@ -4,12 +4,14 @@ import promitech.web_angular_exp.model.ProductParameter;
 
 public class ProductParameterJSON {
 
+    private final Long id;
     private final Long productId;
     private final ProductParameterTypeJSON type;
     private final String value;
     private final String bigValue;
     
     public ProductParameterJSON(ProductParameter param) {
+        id = param.getId();
         productId = param.getProduct().getId();
         type = new ProductParameterTypeJSON(param.getType());
         value = param.getValue();
@@ -30,5 +32,9 @@ public class ProductParameterJSON {
 
     public String getBigValue() {
         return bigValue;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
