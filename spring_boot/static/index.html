@@ -37,8 +37,11 @@
 			<div class="col-sm-10">
 			
 				<div ng-if="selectedProduct != null">
-					<select ng-model="selectedParameterType" ng-options="paramType.name for paramType in parameterTypes"></select>
-					
+					typParametru:
+					<select ng-init="selectedParameterType = selectedParameterType || parameterTypes[0].name" 
+						ng-model="selectedParameterType" 
+						ng-options="paramType.name for paramType in parameterTypes">
+					</select> <br>
 					value: <input type="text"> <br>
 					bigvalue: <textarea rows="4" cols="50">
 					</textarea> <br>
@@ -91,14 +94,12 @@ app.controller('productParametersController', function($scope, $http) {
 	this.loadProductParametersType = function() {
 		$http.get("rest/parameterType/list").then(function(response) {
 			$scope.parameterTypes = response.data;
+			$scope.selectedParameterType = $scope.parameterTypes[0];
 		});
 	}
 	
-	
 	this.loadProductParametersType();
 	this.loadProductsList();
-sdfsdf
-	$scope.selectedParameterType = parameterTypes[0].name;
 });
 </script>
 	
