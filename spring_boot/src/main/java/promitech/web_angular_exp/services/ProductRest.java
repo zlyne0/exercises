@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import promitech.web_angular_exp.json.ProductJSON;
@@ -48,5 +50,10 @@ public class ProductRest {
         return StreamSupport.stream(productParameterTypeRepository.findAll().spliterator(), false)
             .map(ProductParameterTypeJSON::new)
             .collect(Collectors.toList());
+    }
+    
+    @RequestMapping(path = "/product/{productId}/addParam", method = RequestMethod.POST)
+    public void addProductParam(@PathVariable Long productId, @RequestBody ProductParameterJSON param) {
+        System.out.print("productParam = " + param);
     }
 }

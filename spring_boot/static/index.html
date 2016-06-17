@@ -43,7 +43,7 @@
 							<label class="control-label col-sm-2" for="parameterTypesId">Typ parametru:</label>
 							<div class="col-sm-10">
 								<select id="parameterTypesId" class="form-control"									  
-									ng-model="selectedParameterType" 
+									ng-model="newParam.selectedParameterType" 
 									ng-options="paramType.name for paramType in parameterTypes">
 								</select>							
 							</div>
@@ -52,20 +52,23 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="parameterValueId">Wartość:</label>
 							<div class="col-sm-10">
-								<input id="parameterValueId" type="text" class="form-control">							
+								<input id="parameterValueId" type="text" class="form-control"
+									ng-model="newParam.value">							
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="parameterBigValueId">Duża wartość:</label>
 							<div class="col-sm-10">
-								<textarea id="parameterBigValueId" rows="4" cols="50" class="form-control"></textarea>							
+								<textarea id="parameterBigValueId" rows="4" cols="50" class="form-control"
+									ng-model="newParam.bigValue">
+								</textarea>							
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Dodaj</button>
+								<button type="submit" class="btn btn-default" ng-click="pp.addParam()">Dodaj</button>
 							</div>
 						</div>
 
@@ -82,7 +85,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="param in productParameters">
+						<tr ng-repeat="param in productParameters" 
+							ng-click="pp.setSelectedParam(param)"
+							ng-class="{info: param.id === selectedParam.id}">
 							<td>{{ param.type.name }}</td>
 							<td>{{ param.value }}</td>
 							<td>{{ param.bigValue }}</td>
@@ -97,6 +102,7 @@
 <script charset="UTF-8">
 var app = angular.module('productParametersApp', []);
 app.controller('productParametersController', function($scope, $http) {
+	$scope.newParam = {};
 	
 	this.setSelectedProduct = function(product) {
 		$scope.selectedProduct = product;
@@ -104,6 +110,10 @@ app.controller('productParametersController', function($scope, $http) {
 		$http.get("rest/product/" + product.id + "/parameters").then(function(response) {
 			$scope.productParameters = response.data;
 		});
+	}
+	
+	this.setSelectedParam = function(param) {
+		$scope.selectedParam = param;
 	}
 	
 	this.loadProductsList = function() {
@@ -118,8 +128,20 @@ app.controller('productParametersController', function($scope, $http) {
 	this.loadProductParametersType = function() {
 		$http.get("rest/parameterType/list").then(function(response) {
 			$scope.parameterTypes = response.data;
-			$scope.selectedParameterType = $scope.parameterTypes[0];
+			$scope.newParam.selectedParameterType = $scope.parameterTypes[0];
 		});
+	}
+	
+	this.addParam = function() {
+		var data = { 
+			productId: $scope.selectedProduct.id,
+			type: {
+				id: $scope.newParam.selectedParameterType.id
+			},
+			value: $scope.newParam.value, 
+			bigValue: $scope.newParam.bigValue 
+		};
+		$http.post("rest/product/" + $scope.selectedProduct.id + "/addParam", data);
 	}
 	
 	this.loadProductParametersType();
