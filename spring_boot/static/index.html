@@ -38,7 +38,7 @@
 			
 				<div ng-include src="'paramModal.html'"></div>
 				<div ng-if="selectedProduct != null">
-					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addParamModal">Add param</button>
+					<button type="button" class="btn btn-default" data-toggle="modal" ng-click="pp.openParamWindow('#addParamModal')" >Add param</button>
 				</div>
 			
 				selected product: <b>{{ selectedProduct.name }}</b>
@@ -67,20 +67,25 @@
 	
 <script charset="UTF-8">
 var app = angular.module('productParametersApp', []);
-app.controller('productParametersController', function($scope, $http) {
+app.factory('ProductRepository', function ($resource) {
+	return $resource( 'rest/product/:productId/addParam', { productId: '@productId' } );
+}).controller('productParametersController', function($scope, $http) {
 	$scope.newParam = {};
 	self = this;
 	
 	self.setSelectedProduct = function(product) {
 		$scope.selectedProduct = product;
-		
-		$http.get("rest/product/" + product.id + "/parameters").then(function(response) {
-			$scope.productParameters = response.data;
-		});
+		self.loadProductParameters();
 	}
 	
 	self.setSelectedParam = function(param) {
 		$scope.selectedParam = param;
+	}
+	
+	self.loadProductParameters = function() {
+		$http.get("rest/product/" + $scope.selectedProduct.id + "/parameters").then(function(response) {
+			$scope.productParameters = response.data;
+		});
 	}
 	
 	self.loadProductsList = function() {
@@ -108,13 +113,25 @@ app.controller('productParametersController', function($scope, $http) {
 			value: $scope.newParam.value, 
 			bigValue: $scope.newParam.bigValue 
 		};
-		$http.post("rest/product/" + $scope.selectedProduct.id + "/addParam", data);
+		$http.post("rest/product/" + $scope.selectedProduct.id + "/addParam", data).then(
+			function onSuccess(response) {
+				self.loadProductParameters();					
+			},
+			function onError(response) {
+				alert('error status: ' + response.status + ', data: ' + response.data);
+			}
+		);
 	}
 	
 	self.saveParam = function(modalId) {
 		self.addParam();
 		// TODO: after http.post download (on promice)
 		$(modalId).modal("hide");
+	}
+	
+	self.openParamWindow = function(modalId) {
+		$scope.newParam = {};
+		$(modalId).modal("show");
 	}
 	
 	self.loadProductParametersType();
