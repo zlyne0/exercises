@@ -58,4 +58,24 @@ public class ProductParameter {
     public String getBigValue() {
         return bigValue;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setType(ProductParameterType type) {
+        this.type = type;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setBigValue(String bigValue) {
+        this.bigValue = bigValue;
+    }
 }

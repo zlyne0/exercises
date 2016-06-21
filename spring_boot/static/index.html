@@ -36,43 +36,9 @@
 			
 			<div class="col-sm-10">
 			
+				<div ng-include src="'paramModal.html'"></div>
 				<div ng-if="selectedProduct != null">
-					<form class="form-horizontal">
-						
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="parameterTypesId">Typ parametru:</label>
-							<div class="col-sm-10">
-								<select id="parameterTypesId" class="form-control"									  
-									ng-model="newParam.selectedParameterType" 
-									ng-options="paramType.name for paramType in parameterTypes">
-								</select>							
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="parameterValueId">Wartość:</label>
-							<div class="col-sm-10">
-								<input id="parameterValueId" type="text" class="form-control"
-									ng-model="newParam.value">							
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-2" for="parameterBigValueId">Duża wartość:</label>
-							<div class="col-sm-10">
-								<textarea id="parameterBigValueId" rows="4" cols="50" class="form-control"
-									ng-model="newParam.bigValue">
-								</textarea>							
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default" ng-click="pp.addParam()">Dodaj</button>
-							</div>
-						</div>
-
-					</form>
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addParamModal">Add param</button>
 				</div>
 			
 				selected product: <b>{{ selectedProduct.name }}</b>
@@ -103,8 +69,9 @@
 var app = angular.module('productParametersApp', []);
 app.controller('productParametersController', function($scope, $http) {
 	$scope.newParam = {};
+	self = this;
 	
-	this.setSelectedProduct = function(product) {
+	self.setSelectedProduct = function(product) {
 		$scope.selectedProduct = product;
 		
 		$http.get("rest/product/" + product.id + "/parameters").then(function(response) {
@@ -112,11 +79,11 @@ app.controller('productParametersController', function($scope, $http) {
 		});
 	}
 	
-	this.setSelectedParam = function(param) {
+	self.setSelectedParam = function(param) {
 		$scope.selectedParam = param;
 	}
 	
-	this.loadProductsList = function() {
+	self.loadProductsList = function() {
 		$scope.selectedProduct = null;
 		$scope.productParameters = [];
 		
@@ -125,14 +92,14 @@ app.controller('productParametersController', function($scope, $http) {
 		});
 	}
 	
-	this.loadProductParametersType = function() {
+	self.loadProductParametersType = function() {
 		$http.get("rest/parameterType/list").then(function(response) {
 			$scope.parameterTypes = response.data;
 			$scope.newParam.selectedParameterType = $scope.parameterTypes[0];
 		});
 	}
 	
-	this.addParam = function() {
+	self.addParam = function() {
 		var data = { 
 			productId: $scope.selectedProduct.id,
 			type: {
@@ -144,8 +111,14 @@ app.controller('productParametersController', function($scope, $http) {
 		$http.post("rest/product/" + $scope.selectedProduct.id + "/addParam", data);
 	}
 	
-	this.loadProductParametersType();
-	this.loadProductsList();
+	self.saveParam = function(modalId) {
+		self.addParam();
+		// TODO: after http.post download (on promice)
+		$(modalId).modal("hide");
+	}
+	
+	self.loadProductParametersType();
+	self.loadProductsList();
 });
 </script>
 	

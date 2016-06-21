@@ -7,6 +7,8 @@ import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import promitech.web_angular_exp.json.ProductJSON;
 import promitech.web_angular_exp.json.ProductParameterJSON;
 import promitech.web_angular_exp.json.ProductParameterTypeJSON;
+import promitech.web_angular_exp.model.Product;
+import promitech.web_angular_exp.model.ProductParameter;
 import promitech.web_angular_exp.model.ProductParameterType;
 
 @RestController
@@ -29,6 +33,9 @@ public class ProductRest {
     
     @Autowired
     private ProductParameterTypeRepository productParameterTypeRepository;
+    
+    @Autowired
+    private ProductParameterRepository productParameterRepository;
     
     @RequestMapping("/product/list")
     public List<ProductJSON> products() {
@@ -53,7 +60,24 @@ public class ProductRest {
     }
     
     @RequestMapping(path = "/product/{productId}/addParam", method = RequestMethod.POST)
-    public void addProductParam(@PathVariable Long productId, @RequestBody ProductParameterJSON param) {
-        System.out.print("productParam = " + param);
+    public ResponseEntity<?> addProductParam(@PathVariable Long productId, @RequestBody ProductParameterJSON param) {
+        Product product = productRepository.findOne(productId);
+        if (product == null) {
+            return ResponseEntity.badRequest().body("product not found by id " + productId);
+        }
+        ProductParameterType paramType = productParameterTypeRepository.findOne(param.getType().getId());
+        if (paramType == null) {
+            return ResponseEntity.badRequest().body("product not found by id " + param.getType().getId());
+        }
+
+        ProductParameter pp = new ProductParameter();
+        pp.setBigValue(param.getBigValue());
+        pp.setProduct(product);
+        pp.setType(paramType);
+        pp.setValue(param.getValue());
+        
+        pp = productParameterRepository.save(pp);
+        ProductParameterJSON jsonObj = new ProductParameterJSON(pp);
+        return new ResponseEntity<ProductParameterJSON>(jsonObj, HttpStatus.OK);
     }
 }
