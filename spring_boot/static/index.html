@@ -44,7 +44,7 @@
 				<button type="button" class="btn btn-default" 
 					data-toggle="modal" 
 					ng-disabled="selectedParam == null"
-					ng-click="pp.openParamWindow('#addParamModal')">Edit param</button>
+					ng-click="pp.openEditParamWindow('#addParamModal')">Edit param</button>
 			
 				selected product: <b>{{ selectedProduct.name }}</b>
 				<table class="table table-bordered table-condensed">
@@ -106,7 +106,7 @@ app.factory('ProductRepository', function ($resource) {
 	self.loadProductParametersType = function() {
 		$http.get("rest/parameterType/list").then(function(response) {
 			$scope.parameterTypes = response.data;
-			$scope.newParam.selectedParameterType = $scope.parameterTypes[0];
+			$scope.newParam.type = $scope.parameterTypes[0];
 		});
 	}
 	
@@ -114,7 +114,7 @@ app.factory('ProductRepository', function ($resource) {
 		var data = { 
 			productId: $scope.selectedProduct.id,
 			type: {
-				id: $scope.newParam.selectedParameterType.id
+				id: $scope.newParam.type.id
 			},
 			value: $scope.newParam.value, 
 			bigValue: $scope.newParam.bigValue 
@@ -136,6 +136,11 @@ app.factory('ProductRepository', function ($resource) {
 	
 	self.openParamWindow = function(modalId) {
 		$scope.newParam = {};
+		$(modalId).modal("show");
+	}
+	
+	self.openEditParamWindow = function(modalId) {
+		$scope.newParam = JSON.parse(JSON.stringify($scope.selectedParam));
 		$(modalId).modal("show");
 	}
 	
