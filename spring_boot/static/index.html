@@ -37,9 +37,14 @@
 			<div class="col-sm-10">
 			
 				<div ng-include src="'paramModal.html'"></div>
-				<div ng-if="selectedProduct != null">
-					<button type="button" class="btn btn-default" data-toggle="modal" ng-click="pp.openParamWindow('#addParamModal')" >Add param</button>
-				</div>
+				<button type="button" class="btn btn-default" 
+					data-toggle="modal" 
+					ng-disabled="selectedProduct == null"
+					ng-click="pp.openParamWindow('#addParamModal')">Add param</button>
+				<button type="button" class="btn btn-default" 
+					data-toggle="modal" 
+					ng-disabled="selectedParam == null"
+					ng-click="pp.openParamWindow('#addParamModal')">Edit param</button>
 			
 				selected product: <b>{{ selectedProduct.name }}</b>
 				<table class="table table-bordered table-condensed">
@@ -74,6 +79,7 @@ app.factory('ProductRepository', function ($resource) {
 	self = this;
 	
 	self.setSelectedProduct = function(product) {
+		$scope.selectedParam = null;
 		$scope.selectedProduct = product;
 		self.loadProductParameters();
 	}
@@ -125,7 +131,6 @@ app.factory('ProductRepository', function ($resource) {
 	
 	self.saveParam = function(modalId) {
 		self.addParam();
-		// TODO: after http.post download (on promice)
 		$(modalId).modal("hide");
 	}
 	
