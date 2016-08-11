@@ -8,7 +8,10 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<script src="js/angular.min.js"></script>
 	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>		
+	<script src="js/bootstrap.min.js"></script>
+	
+	<script src="js/app.js"></script>		
+	<script src="js/productParamEditor.directive.js"></script>
 </head>
 	
 <body>
@@ -35,8 +38,7 @@
 			</div>
 			
 			<div class="col-sm-10">
-			
-				<div ng-include src="'paramModal.html'"></div>
+
 				<button type="button" class="btn btn-default" 
 					data-toggle="modal" 
 					ng-disabled="selectedProduct == null"
@@ -68,86 +70,13 @@
 			</div>
 		</div>
 	
+	<product-param-editor-widget 
+		parameter-types-data="parameterTypes"
+		control="paramWindowControl"
+		when-save-param="pp.onSaveParam(param)">
+	</product-param-editor-widget>
+	
 </div>
-	
-<script charset="UTF-8">
-var app = angular.module('productParametersApp', []);
-app.factory('ProductRepository', function ($resource) {
-	return $resource( 'rest/product/:productId/addParam', { productId: '@productId' } );
-}).controller('productParametersController', function($scope, $http) {
-	$scope.newParam = {};
-	self = this;
-	
-	self.setSelectedProduct = function(product) {
-		$scope.selectedParam = null;
-		$scope.selectedProduct = product;
-		self.loadProductParameters();
-	}
-	
-	self.setSelectedParam = function(param) {
-		$scope.selectedParam = param;
-	}
-	
-	self.loadProductParameters = function() {
-		$http.get("rest/product/" + $scope.selectedProduct.id + "/parameters").then(function(response) {
-			$scope.productParameters = response.data;
-		});
-	}
-	
-	self.loadProductsList = function() {
-		$scope.selectedProduct = null;
-		$scope.productParameters = [];
-		
-		$http.get("rest/product/list").then(function(response) {
-			$scope.products = response.data;
-		});
-	}
-	
-	self.loadProductParametersType = function() {
-		$http.get("rest/parameterType/list").then(function(response) {
-			$scope.parameterTypes = response.data;
-			$scope.newParam.type = $scope.parameterTypes[0];
-		});
-	}
-	
-	self.addParam = function() {
-		var data = { 
-			productId: $scope.selectedProduct.id,
-			type: {
-				id: $scope.newParam.type.id
-			},
-			value: $scope.newParam.value, 
-			bigValue: $scope.newParam.bigValue 
-		};
-		$http.post("rest/product/" + $scope.selectedProduct.id + "/addParam", data).then(
-			function onSuccess(response) {
-				self.loadProductParameters();					
-			},
-			function onError(response) {
-				alert('error status: ' + response.status + ', data: ' + response.data);
-			}
-		);
-	}
-	
-	self.saveParam = function(modalId) {
-		self.addParam();
-		$(modalId).modal("hide");
-	}
-	
-	self.openParamWindow = function(modalId) {
-		$scope.newParam = {};
-		$(modalId).modal("show");
-	}
-	
-	self.openEditParamWindow = function(modalId) {
-		$scope.newParam = JSON.parse(JSON.stringify($scope.selectedParam));
-		$(modalId).modal("show");
-	}
-	
-	self.loadProductParametersType();
-	self.loadProductsList();
-});
-</script>
 	
 </body>
 

@@ -45,7 +45,7 @@ public class ProductRest {
     }
     
     @RequestMapping("/product/{productId}/parameters")
-    public List<ProductParameterJSON> productParameters(@PathVariable Long productId) {
+    public List<ProductParameterJSON> productParameters(@PathVariable("productId") Long productId) {
         return productRepository.findParametersByProductId(productId)
             .stream()
             .map(ProductParameterJSON::new)
@@ -60,7 +60,7 @@ public class ProductRest {
     }
     
     @RequestMapping(path = "/product/{productId}/addParam", method = RequestMethod.POST)
-    public ResponseEntity<?> addProductParam(@PathVariable Long productId, @RequestBody ProductParameterJSON param) {
+    public ResponseEntity<?> addProductParam(@PathVariable("productId") Long productId, @RequestBody ProductParameterJSON param) {
         Product product = productRepository.findOne(productId);
         if (product == null) {
             return ResponseEntity.badRequest().body("product not found by id " + productId);
@@ -71,10 +71,12 @@ public class ProductRest {
         }
 
         ProductParameter pp = new ProductParameter();
+        pp.setId(param.getId());
         pp.setBigValue(param.getBigValue());
         pp.setProduct(product);
         pp.setType(paramType);
         pp.setValue(param.getValue());
+        pp.setBigValue(param.getBigValue());
         
         pp = productParameterRepository.save(pp);
         ProductParameterJSON jsonObj = new ProductParameterJSON(pp);
