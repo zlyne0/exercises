@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="productParametersApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+<div ng-controller="productParametersController as pp">
+
+		<div class="row">
+			
+			<div class="col-sm-2">
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th>Product Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="product in products"
+							ng-click="pp.setSelectedProduct(product)"
+							ng-class="{info: product.id === selectedProduct.id}">
+							<td>{{ product.name }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="col-sm-10">
+
+				<button type="button" class="btn btn-default" 
+					data-toggle="modal" 
+					ng-disabled="selectedProduct == null"
+					ng-click="pp.openParamWindow('#addParamModal')">Add param</button>
+				<button type="button" class="btn btn-default" 
+					data-toggle="modal" 
+					ng-disabled="selectedParam == null"
+					ng-click="pp.openEditParamWindow('#addParamModal')">Edit param</button>
+			
+				selected product: <b>{{ selectedProduct.name }}</b>
+				<table class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+							<th>Big value</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="param in productParameters" 
+							ng-click="pp.setSelectedParam(param)"
+							ng-class="{info: param.id === selectedParam.id}">
+							<td>{{ param.type.name }}</td>
+							<td>{{ param.value }}</td>
+							<td>{{ param.bigValue }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	
+	<product-param-editor-widget 
+		parameter-types-data="parameterTypes"
+		control="paramWindowControl"
+		when-save-param="pp.onSaveParam(param)">
+	</product-param-editor-widget>
+	
+</div>
+	
+	
+	
+	
+	
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
