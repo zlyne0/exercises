@@ -59,7 +59,7 @@ public class ProductRest {
             .collect(Collectors.toList());
     }
     
-    @RequestMapping(path = "/product/{productId}/addParam", method = RequestMethod.POST)
+    @RequestMapping(path = "/product/{productId}/params", method = RequestMethod.POST)
     public ResponseEntity<?> addProductParam(@PathVariable("productId") Long productId, @RequestBody ProductParameterJSON param) {
         Product product = productRepository.findOne(productId);
         if (product == null) {

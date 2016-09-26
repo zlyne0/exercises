@@ -240,7 +240,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '<%= yeoman.app %>/*.html',
       options: {
         dest: '<%= yeoman.dist %>',
         flow: {
@@ -345,7 +345,7 @@ module.exports = function (grunt) {
           usemin: 'scripts/scripts.js'
         },
         cwd: '<%= yeoman.app %>',
-        src: 'views/{,*/}*.html',
+        src: '*/**/*.html',
         dest: '.tmp/templateCache.js'
       }
     },
@@ -472,8 +472,8 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'filerev',
-    //'usemin',
-    //'htmlmin'
+    'usemin',
+    'htmlmin'
   ]);
 
   grunt.registerTask('default', [
