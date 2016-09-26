@@ -17,7 +17,7 @@ angular.module('productParametersApp').factory('paramService', function($http, $
 	}
 	
 	function createParam(productId, param) {
-		return $resource("rest/product/:productId/params", {productId : productId}).save(param).$promise;
+		return $resource('rest/product/:productId/params', {productId : productId}).save(param).$promise;
 	}
 	
 	return {

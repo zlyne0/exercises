@@ -7,7 +7,7 @@ angular.module('productParametersApp').factory('productParamEditorWindowProvider
 			backdrop : 'static',
 			keyboard : false,
 			templateUrl : 'scripts/productParamEditorWindow.html',
-			controller : "paramEditionController",
+			controller : 'paramEditionController',
 			resolve : {
 				windowInputData : function() {
 					return {
