@@ -19,24 +19,26 @@ var app = angular
     'ui.router',
     'ui.bootstrap'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    
+    var login = {
+        name : 'login',
+        url : '/login',
+        templateUrl : 'scripts/login/loginForm.html',
+        controller : 'loginFormCtrl'
+    };
+    var productParameters = {
+        name : 'productParameters',
+        url : '/productParameters',
+        templateUrl : 'scripts/products.html',
+        controller : 'productParametersController'
+    };
+    $stateProvider.state(login);
+    $stateProvider.state(productParameters);
+});
 
-app.controller('productParametersController', function($scope, $http, productParamEditorWindowProvider, paramService) {
+app.controller('productParametersController', function($scope, productParamEditorWindowProvider, paramService) {
 	var self = this;
 
 	$scope.selectedProduct = {};

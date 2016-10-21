@@ -20,64 +20,17 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-
-<div ng-controller="productParametersController as pp">
-
+	<div ng-controller="mainPageCtrl">
 		<div class="row">
-			
-			<div class="col-sm-2">
-				<table class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>Product Name</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="product in products"
-							ng-click="pp.setSelectedProduct(product)"
-							ng-class="{info: product.id === selectedProduct.id}">
-							<td>{{ product.name }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			
 			<div class="col-sm-10">
-
-				<button type="button" class="btn btn-default" 
-					data-toggle="modal" 
-					ng-disabled="selectedProduct == null"
-					ng-click="pp.openParamWindow()">Add param</button>
-				<button type="button" class="btn btn-default" 
-					data-toggle="modal" 
-					ng-disabled="selectedParam == null"
-					ng-click="pp.openEditParamWindow()">Edit param</button>
-			
-				selected product: <b>{{ selectedProduct.name }}</b>
-				<table class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Value</th>
-							<th>Big value</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="param in productParameters" 
-							ng-click="pp.setSelectedParam(param)"
-							ng-class="{info: param.id === selectedParam.id}">
-							<td>{{ param.type.name }}</td>
-							<td>{{ param.value }}</td>
-							<td>{{ param.bigValue }}</td>
-						</tr>
-					</tbody>
-				</table>
+			</div>
+			<div class="col-sm-2">
+				<button type="button" class="btn btn-default">logout</button>
 			</div>
 		</div>
-</div>
-	
-	
-	
+
+		<div ui-view></div>
+	</div>
 	
 	
     <!-- build:js(.) scripts/vendor.js -->
@@ -98,12 +51,15 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        
+        <script type="text/javascript" src="scripts/login/loginService.js"></script>
+        <script type="text/javascript" src="scripts/login/loginFormCtrl.js"></script>
+        <script type="text/javascript" src="scripts/mainPageCtrl.js"></script>
+        
         <script src="scripts/paramService.js"></script>
         <script src="scripts/productParamEditorWindowProvider.js"></script>
         <script src="scripts/productParamEditorWindowController.js"></script>
         
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
         <!-- endbuild -->
 </body>
 </html>
