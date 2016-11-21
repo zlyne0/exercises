@@ -10,4 +10,9 @@ angular.module('productParametersApp').controller('mainPageCtrl', function($scop
     }, function() {
         $state.go('login');
     });
+    
+    $scope.logout = function() {
+        loginService.logout();
+        $state.go('login');
+    }    
 });

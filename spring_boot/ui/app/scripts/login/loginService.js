@@ -28,7 +28,14 @@ angular.module('productParametersApp').factory('loginService', function($q, $htt
         });
     }
     
+    function logout() {
+        $http.post('logout', {}).finally(function() {
+            self.authenticated = false;
+        });
+    }
+    
     return {
+        logout : logout,
         authenticate : authenticate,
         isAuthenticated : authenticated
     };
