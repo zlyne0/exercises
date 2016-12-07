@@ -4,3 +4,5 @@ mvn spring-boot:run
 Application on url http://localhost:8080
 
 Swagger url http://localhost:8080/swagger-ui.html
+
+mvn spring-boot:run -Dserver.port=19001
