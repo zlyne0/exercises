@@ -14,7 +14,7 @@ angular.module('productParametersApp').controller('loginFormCtrl', function($sco
                 $scope.authMsg = 'bledne haslo';
             }
         }, function(error) {
-            $log.debug('service error: ' + error);
+            $log.debug('service error: ' + angular.toJson(error));
             $scope.authMsg = 'blad aplikacji';
         });
     };

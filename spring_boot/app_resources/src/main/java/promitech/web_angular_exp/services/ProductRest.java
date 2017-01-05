@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,8 @@ import promitech.web_angular_exp.model.ProductParameterType;
 
 @RestController
 @RequestMapping("/rest")
+@CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = { "x-auth-token", "x-requested-with" })
+//@CrossOrigin(origins="*", maxAge=3600)
 public class ProductRest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductRest.class);

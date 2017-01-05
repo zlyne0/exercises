@@ -1,6 +1,10 @@
 package promitech.web_angular_exp.services;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,4 +20,8 @@ public class LoginRest {
         return user;
     }
     
+    @RequestMapping("/token")
+    public Map<String, String> token(HttpSession session) {
+        return Collections.singletonMap("token", session.getId());
+    }
 }

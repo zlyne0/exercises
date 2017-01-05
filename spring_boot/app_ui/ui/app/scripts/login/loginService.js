@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('productParametersApp').factory('loginService', function($q, $http) {
-    
+angular.module('productParametersApp').factory('loginService', function($q, $http, $location) {
     var self = this;
+    var loc = $location.protocol() + '://' + $location.host() + ':' + $location.port();
     
     var authenticated = false;
     
@@ -11,11 +11,11 @@ angular.module('productParametersApp').factory('loginService', function($q, $htt
             var headers = credentials ? {
                 Authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
             } : {};
-            
-            $http.get('rest/user/login', {
+            $http.get(loc + '/rest/user/login', {
                 headers : headers
             }).then(function(response) {
                 if (response.data.name) {
+                    getToken();
                     self.authenticated = true;
                 } else {
                     self.authenticated = false;
@@ -28,8 +28,25 @@ angular.module('productParametersApp').factory('loginService', function($q, $htt
         });
     }
     
+    function getToken() {
+        $http.get(loc + '/token').then(function(response) {
+            var token = response.data.token;
+            
+            $http({
+                url : 'http://localhost:18080/rest/product/list',
+                method : 'GET',
+                headers : {
+                    'x-auth-token' : response.data.token
+                }
+            }).then(function(response) {
+                console.log('product list ' + angular.toJson(response))
+            });            
+            
+        })
+    }
+    
     function logout() {
-        $http.post('logout', {}).finally(function() {
+        $http.post(loc + '/logout', {}).finally(function() {
             self.authenticated = false;
         });
     }

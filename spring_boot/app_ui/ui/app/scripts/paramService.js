@@ -1,23 +1,24 @@
 'use strict';
 
-angular.module('productParametersApp').factory('paramService', function($http, $resource) {
-	
+angular.module('productParametersApp').factory('paramService', function($http, $resource, $location) {
+    var loc = $location.protocol() + '://' + $location.host() + ':18080';
+    
 	function loadProductParametersType() {
-		return $resource('rest/parameterType/list').query().$promise;
+		return $resource(loc + '/rest/parameterType/list').query().$promise;
 	}
 
 	function loadProductList() {
-		return $resource('rest/product/list').query().$promise;
+		return $resource(loc + '/rest/product/list').query().$promise;
 	}
 
 	function loadProductParameters(productId) {
-		return $resource('rest/product/:productId/parameters')
+		return $resource(loc + '/rest/product/:productId/parameters')
 			.query({productId : productId})
 			.$promise;
 	}
 	
 	function createParam(productId, param) {
-		return $resource('rest/product/:productId/params', {productId : productId}).save(param).$promise;
+		return $resource(loc + '/rest/product/:productId/params', {productId : productId}).save(param).$promise;
 	}
 	
 	return {
