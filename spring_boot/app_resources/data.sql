@@ -1,4 +1,3 @@
-insert into Customer (id, firstname, lastname ) values (1, 'jeden', 'jeden');
 
 insert into product (id, code, name ) values (1, 'GOLD', 'złoto');
 insert into product (id, code, name ) values (2, 'SLIVER', 'Srebro ŻŹĆżź');

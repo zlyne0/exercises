@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('productParametersApp').factory('paramService', function($http, $resource, $location) {
-    var loc = $location.protocol() + '://' + $location.host() + ':18080';
+    var loc = $location.protocol() + '://' + $location.host() + ':' + $location.port();
     
 	function loadProductParametersType() {
 		return $resource(loc + '/rest/parameterType/list').query().$promise;

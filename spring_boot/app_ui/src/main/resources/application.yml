@@ -1,0 +1,26 @@
+security:
+  user:
+    password: password
+
+#logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: INFO
+info.tcb: DEBUG
+
+#spring.redis.host: localhost
+spring.redis.host: 192.168.99.100
+spring.redis.port: 6379
+
+
+#zuul.debug.request: true
+#zuul.debugRouting: true
+zuul:
+  routes:
+    resource:
+      sensitiveHeaders:
+      sensitive-headers: 
+      path: /rest/**
+      url: http://localhost:18080/rest
+      

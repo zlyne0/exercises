@@ -25,7 +25,7 @@ import promitech.web_angular_exp.model.ProductParameterType;
 
 @RestController
 @RequestMapping("/rest")
-@CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = { "x-auth-token", "x-requested-with" })
+//@CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = { "x-auth-token", "x-requested-with" })
 //@CrossOrigin(origins="*", maxAge=3600)
 public class ProductRest {
 
