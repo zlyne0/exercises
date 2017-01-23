@@ -1,0 +1,41 @@
+body {
+    background-color: white;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 20px;
+	padding: 0;
+}
+
+.content {
+	margin: 50px;
+}
+
+.mainMenu {
+	text-align: right;
+	color: black;
+}
+
+.mainMenu a {
+	margin-right: 20px;
+	color: black;
+}
+
+.mainMenu a:link {
+    text-decoration: none;
+	color: black;
+}
+
+.mainMenu a:visited {
+    text-decoration: none;
+	color: black;
+}
+
+.mainMenu a:hover {
+    text-decoration: underline;
+	color: black;
+}
+
+.mainMenu a:active {
+    text-decoration: underline;
+	color: black;
+}
