@@ -12,5 +12,8 @@ app.config(function($routeProvider) {
     })
     .when("/company", {
         templateUrl : "company.html"
+    })
+    .when("/contact", {
+        templateUrl : "contact.html"
     });
 });	
