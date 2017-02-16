@@ -1,9 +1,18 @@
 body {
-    background-color: white;
+    background-color: #white;
+    color: #333A56;
 	margin-left: 50px;
 	margin-right: 50px;
 	margin-top: 0px;
 	padding: 0;
+}
+
+.main-section {
+	background-color: #F7F5E6;
+}
+
+.menu-section {
+	background-color: #52658F;
 }
 
 .content {
@@ -13,30 +22,30 @@ body {
 
 .mainMenu {
 	text-align: right;
-	color: black;
+	color: #E8E8E8;
 }
 
 .mainMenu a {
 	margin-right: 20px;
-	color: black;
+	color: #E8E8E8;
 }
 
 .mainMenu a:link {
     text-decoration: none;
-	color: black;
+	color: #E8E8E8;
 }
 
 .mainMenu a:visited {
     text-decoration: none;
-	color: black;
+	color: #E8E8E8;
 }
 
 .mainMenu a:hover {
     text-decoration: underline;
-	color: black;
+	color: #E8E8E8;
 }
 
 .mainMenu a:active {
     text-decoration: underline;
-	color: black;
+	color: #E8E8E8;
 }

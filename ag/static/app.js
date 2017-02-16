@@ -4,7 +4,7 @@ angular.module("anterApp", ["ngRoute"])
 .config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "main.html"
+        templateUrl : "company.html"
     })
     .when("/employer", {
         templateUrl : "employer.html"
