@@ -1,6 +1,6 @@
 body {
     background-color: #white;
-    color: #333A56;
+    color: #white;
 	margin-left: 50px;
 	margin-right: 50px;
 	margin-top: 0px;
@@ -8,11 +8,11 @@ body {
 }
 
 .main-section {
-	background-color: #F7F5E6;
+	background-color: #DFE2DB;
 }
 
 .menu-section {
-	background-color: #52658F;
+	background-color: #191919;
 }
 
 .content {
@@ -22,30 +22,42 @@ body {
 
 .mainMenu {
 	text-align: right;
-	color: #E8E8E8;
+	color: white;
 }
 
 .mainMenu a {
 	margin-right: 20px;
-	color: #E8E8E8;
+	color: white;
 }
 
 .mainMenu a:link {
     text-decoration: none;
-	color: #E8E8E8;
+	color: white;
 }
 
 .mainMenu a:visited {
     text-decoration: none;
-	color: #E8E8E8;
+	color: white;
 }
 
 .mainMenu a:hover {
     text-decoration: underline;
-	color: #E8E8E8;
+	color: #FFF056;
+	border: solid 2px #FFF056;
 }
 
 .mainMenu a:active {
     text-decoration: underline;
-	color: #E8E8E8;
+	color: white;
+}
+
+.footer {
+	color: white;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	padding: 1rem;
+	background-color: #191919;
+	text-align: center;
 }
