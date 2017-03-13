@@ -1,8 +1,10 @@
-var app = angular.module("anterApp", ["ngRoute"]);
-app.config(function($routeProvider) {
+(function() {'use strict';
+
+angular.module("anterApp", ["ngRoute"])
+.config(function($routeProvider) {
     $routeProvider
     .when("/", {
-        templateUrl : "main.html"
+        templateUrl : "company.html"
     })
     .when("/employer", {
         templateUrl : "employer.html"
@@ -12,5 +14,10 @@ app.config(function($routeProvider) {
     })
     .when("/company", {
         templateUrl : "company.html"
+    })
+    .when("/contact", {
+        templateUrl : "contact.html"
     });
 });	
+
+})();
