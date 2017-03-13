@@ -1,6 +1,6 @@
-security:
-  user:
-    password: password
+#security:
+#  user:
+#    password: password
 
 #logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 logging:
@@ -10,8 +10,8 @@ logging:
 info.tcb: DEBUG
 
 #spring.redis.host: localhost
-spring.redis.host: 192.168.99.100
-spring.redis.port: 6379
+#spring.redis.host: 192.168.99.100
+#spring.redis.port: 6379
 
 
 #zuul.debug.request: true
@@ -23,4 +23,18 @@ zuul:
       sensitive-headers: 
       path: /rest/**
       url: http://localhost:18080/rest
+    user:
+      path: /user/**
+      url: http://localhost:9999/uaa/user
+      
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://localhost:9999/uaa/oauth/token
+      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
+      clientId: acme
+      clientSecret: acmesecret
+    resource:
+      userInfoUri: http://localhost:9999/uaa/user
+
       

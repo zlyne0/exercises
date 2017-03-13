@@ -13,17 +13,6 @@
 		<version>1.4.0.RELEASE</version>
 	</parent>
 
-<!-- 	<dependencyManagement> -->
-<!-- 		<dependencies> -->
-<!-- 			<dependency> -->
-<!-- 				<groupId>org.springframework.cloud</groupId> -->
-<!-- 				<artifactId>spring-cloud-dependencies</artifactId> -->
-<!-- 				<version>Camden.SR2</version> -->
-<!-- 				<type>pom</type> -->
-<!-- 				<scope>import</scope> -->
-<!-- 			</dependency> -->
-<!-- 		</dependencies> -->
-<!-- 	</dependencyManagement> -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -63,14 +52,14 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-redis</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.session</groupId> -->
+<!-- 			<artifactId>spring-session</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-redis</artifactId> -->
+<!-- 		</dependency> -->
 		
 	</dependencies>
 
