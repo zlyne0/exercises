@@ -6,6 +6,7 @@ import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import springfox.documentation.builders.PathSelectors;
@@ -19,6 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EntityScan(basePackages={"promitech.web_angular_exp.model", "hello"})
 @ComponentScan(basePackages={"promitech.web_angular_exp", "hello"})
 @EnableSwagger2
+@EnableResourceServer
 public class Main {
 
     @Bean

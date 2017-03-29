@@ -1,8 +1,24 @@
 cd ui && npm install && bower install && grunt build
 mvn spring-boot:run
 
-Application on url http://localhost:8080
+Application on url http://localhost:18080
 
-Swagger url http://localhost:8080/swagger-ui.html
+Swagger url http://localhost:18080/swagger-ui.html
 
 mvn spring-boot:run -Dserver.port=19001
+
+
+2.
+Request - resposne
+
+http://localhost:9999/uaa/oauth/authorize?response_type=code&client_id=acme&redirect_uri=http://example.com
+
+http://example.com/?code=O3t2A7
+
+curl -v --data "grant_type=authorization_code&client_id=acme&redirect_uri=http%3A%2F%2Fexample.com&code=O3t2A7" http://acme:acmesecret@localhost:9999/uaa/oauth/token
+{"access_token":"705b3b1e-76ec-440c-9a51-9105fa26fdeb","token_type":"bearer","refresh_token":"2d2b5337-38f5-4f92-afc4-3c85af4d96a9","expires_in":41290,"scope":"openid"}
+
+TOKEN=705b3b1e-76ec-440c-9a51-9105fa26fdeb
+curl -H "Authorization: Bearer $TOKEN" localhost:18080/rest/product/list
+[{"id":1,"name":"złoto"},{"id":2,"name":"Srebro ŻŹĆżź"},{"id":3,"name":"Brąz"},{"id":4,"name":"Aliminium"}]
+
