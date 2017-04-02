@@ -10,38 +10,34 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 	<link rel="stylesheet" type="text/css" href="app.css" />
+	<script src="ng-map.min.js"></script>
 	<script src="app.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&callback=initMap"></script>
 </head>
 
 <body ng-app="anterApp">
 
-	<div>
-		<div class="col-sm-1">
-		</div>
-		<div class="col-sm-10 main-section" style="height: 100vh;">
+	<!-- div style="height: 100vh; background-image: url('images/flags_gray.jpg');  background-position: center; background-size: cover;"-->
+	<div style="height: 100vh; background-image: url('images/black-and-white-city-houses-skyline.png');  background-position: center; background-size: cover;">
 		
-			<div style="background-color: #191919; padding: 20px;">
-				<div>
-					<h1 style="color: white;"><b>ANTER GROUP SP. Z O.O.</b></h1>
-				</div>
+		<div style="background-color: #191919; padding: 20px;">
+			<div>
+				<h1 style="color: white;"><b>ANTER GROUP SP. Z O.O.</b></h1>
+			</div>
+
+			<div class="mainMenu menu-section">
+				<a href="#company">O NAS</a>
+				<a href="#employer">DLA PRACODAWCY</a>
+				<a href="#employee">DLA PRACOWNIKA</a>
+				<a href="#contact">KONTAKT</a>
+			</div>
+		</div>
 	
-				<div class="mainMenu menu-section">
-					<a href="#company">O NAS</a>
-					<a href="#employer">DLA PRACODAWCY</a>
-					<a href="#employee">DLA PRACOWNIKA</a>
-					<a href="#contact">KONTAKT</a>
-				</div>
-			</div>
+		<div class="content">
+			<div ng-view></div>
+		</div>
 		
-			<div class="content">
-				<div ng-view></div>
-			</div>
-			
-			<div class="footer">ANTER GROUP SP. Z O.O. Ul. Długa 44/50, lok. 204, 01-241 Warszawa</div>	
-		</div>
-		<div class="col-sm-1">
-		</div>
+		<div class="footer">ANTER GROUP SP. Z O.O. Ul. Długa 44/50, lok. 204, 01-241 Warszawa</div>	
 		
 	</div>
 </body>

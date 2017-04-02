@@ -1,6 +1,6 @@
 (function() {'use strict';
 
-angular.module("anterApp", ["ngRoute"])
+angular.module("anterApp", ["ngRoute", "ngMap"])
 .config(function($routeProvider) {
     $routeProvider
     .when("/", {
