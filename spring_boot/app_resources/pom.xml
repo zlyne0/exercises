@@ -3,15 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.promitech</groupId>
-	<artifactId>spring_boot_app_resources</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
+		<groupId>com.promitech</groupId>
+		<artifactId>spring_boot_app</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	
+	<artifactId>spring_boot_app_resources</artifactId>
 
 	<dependencies>
 		<dependency>
@@ -102,7 +100,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.11</version>
 				<configuration>
-					<imageName>${project.artifactId}</imageName>
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
 					<dockerDirectory>src/main/docker</dockerDirectory>
 					<resources>
 						<resource>

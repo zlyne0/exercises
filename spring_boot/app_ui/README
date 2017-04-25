@@ -1,0 +1,2 @@
+mvn clean package docker:build
+prod_param_app/spring_boot_app_ui

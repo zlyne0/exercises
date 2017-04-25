@@ -1,1 +1,1 @@
-docker run -p 8080:8080 spring_boot_app_resources
+docker run -p 19000:19000 -i -t prod_param_app/spring_boot_app_resources

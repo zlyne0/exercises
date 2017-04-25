@@ -1,4 +1,14 @@
-redis:
-  image: redis
+auth:
+  image: 'prod_param_app/spring_boot_app_authserver'
   ports:
-    - "6379:6379"
+    - "19999:19999"
+resources:
+  image: 'prod_param_app/spring_boot_app_resources'
+  ports:
+    - "19000:19000"
+ui:
+  image: 'prod_param_app/spring_boot_app_ui'
+  ports:
+    - "18080:18080"
+    
+    
