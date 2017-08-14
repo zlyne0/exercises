@@ -7,30 +7,45 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>		
+	
 	<link rel="stylesheet" type="text/css" href="app.css" />
 	<script src="app.js"></script>
 </head>
 
 <body ng-app="anterApp">
 
-	<div style="height: 100vh; background-image: url('images/black-and-white-city-houses-skyline.png');  background-position: center; background-size: cover;">
+	<div style="height: 100vh; background-image: url('images/black-and-white-city-houses-skyline.png'); background-position: center; background-size: cover;">
 		
 		<div style="background-color: #191919; padding: 20px;">
+			<div align="right">
+				<img src="miniflags/ua.png"/>
+				<img src="miniflags/ru.png"/>
+				<img src="miniflags/by.png"/>
+				<img src="miniflags/md.png"/>
+				<img src="miniflags/uz.png"/>			
+				<img src="miniflags/cn.png"/>
+				<img src="miniflags/vn.png"/>
+			</div>
+			
 			<div>
 				<h1 style="color: white;"><b>ANTER GROUP SP. Z O.O.</b></h1>
 			</div>
 
 			<div class="mainMenu menu-section">
-				<a href="#company">O NAS</a>
-				<a href="#employer">DLA PRACODAWCY</a>
-				<a href="#employee">DLA PRACOWNIKA</a>
-				<a href="#contact">KONTAKT</a>
+				<ng-include src="'menu.html'"/>
 			</div>
+			
 		</div>
 	
-		<div class="content">
+		<div class="content" style="margin-left: 15%; margin-right: 15%">
 			<div ng-view></div>
 		</div>
 		
