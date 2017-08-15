@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>ANTER GROUP SP. Z O.O.</title>
+	<title>ANTER GROUP</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -20,11 +20,11 @@
 	<script src="app.js"></script>
 </head>
 
-<body ng-app="anterApp">
+<body ng-app="anterApp" style="background-color: #F4F4F4;">
 
-	<div style="height: 100vh; background-image: url('images/black-and-white-city-houses-skyline.png'); background-position: center; background-size: cover;">
+	<div style="background-color: #F4F4F4;">
 		
-		<div style="background-color: #191919; padding: 20px;">
+		<div style="padding: 20px; background-color: #DCD0C0">
 			<div align="right">
 				<img src="miniflags/ua.png"/>
 				<img src="miniflags/ru.png"/>
@@ -36,20 +36,21 @@
 			</div>
 			
 			<div>
-				<h1 style="color: white;"><b>ANTER GROUP SP. Z O.O.</b></h1>
+				<h1 style="color: black"><b>ANTER GROUP</b></h1>
+				<span style="color: black"><small><i>"Profesjonalne pośrednictwo pracy i doradztwo w zakresie zatrudnienia cudzoziemców,<br>dla nas najważniejszy jest człowiek"</i></small></span>
 			</div>
 
+			
+		</div>
 			<div class="mainMenu menu-section">
 				<ng-include src="'menu.html'"/>
 			</div>
-			
-		</div>
 	
-		<div class="content" style="margin-left: 15%; margin-right: 15%">
+		<div class="content">
 			<div ng-view></div>
 		</div>
 		
-		<div class="footer">ANTER GROUP SP. Z O.O. Ul. Długa 44/50, lok. 204, 00-241 Warszawa</div>	
+		<div class="footer">ANTER GROUP Ul. Długa 44/50, lok. 204, 00-241 Warszawa</div>	
 		
 	</div>
 </body>
