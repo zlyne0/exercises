@@ -2,9 +2,7 @@ body {
     background-color: #F4F4F4";
     
     color: #black;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-top: 0px;
+	margin: 0px;
 	padding: 0;
 }
 
@@ -53,7 +51,7 @@ body {
 	background: transparent;
 	background-color: transparent;
 	color: yellow;
-	border: solid 2px #373737;
+	border: solid 2px yellow;
 }
 
 .menuButton:focus, .menuButton:hover {

@@ -21,11 +21,8 @@
 </head>
 
 <body ng-app="anterApp" style="background-color: #F4F4F4;">
-
-	<div style="background-color: #F4F4F4;">
-		
-		<div style="padding: 20px; background-color: #DCD0C0">
-			<div align="right">
+		<div style="padding-left: 20px; background-color: #DCD0C0">
+			<div style="float: right; display: block; margin-top: 10px; margin-right: 10px">
 				<img src="miniflags/ua.png"/>
 				<img src="miniflags/ru.png"/>
 				<img src="miniflags/by.png"/>
@@ -34,25 +31,21 @@
 				<img src="miniflags/cn.png"/>
 				<img src="miniflags/vn.png"/>
 			</div>
-			
 			<div>
-				<h1 style="color: black"><b>ANTER GROUP</b></h1>
-				<span style="color: black"><small><i>"Profesjonalne pośrednictwo pracy i doradztwo w zakresie zatrudnienia cudzoziemców,<br>dla nas najważniejszy jest człowiek"</i></small></span>
+				<div style="color: black; font-size: 300%;"><b>ANTER GROUP</b></div>
+				<span style="color: black;"><small><i>"Profesjonalne pośrednictwo pracy i doradztwo w zakresie zatrudnienia cudzoziemców,<br>dla nas najważniejszy jest człowiek"</i></small></span>
 			</div>
-
-			
 		</div>
-			<div class="mainMenu menu-section">
-				<ng-include src="'menu.html'"/>
-			</div>
+		
+		<div class="mainMenu menu-section">
+			<ng-include src="'menu.html'"/>
+		</div>
 	
 		<div class="content">
 			<div ng-view></div>
 		</div>
 		
 		<div class="footer">ANTER GROUP Ul. Długa 44/50, lok. 204, 00-241 Warszawa</div>	
-		
-	</div>
 </body>
 
 </html>
