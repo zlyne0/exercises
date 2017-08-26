@@ -1,0 +1,11 @@
+{
+	"one": "jeden",
+	"two": "dwa",
+	"country" : {
+		"PL" : "Polska",
+		"BE" : "Belgia",
+		"NL" : "Holandia",
+		"FR" : "Francja",
+		"DE" : "Niemcy"
+	}	
+}

@@ -2,8 +2,15 @@
 'use strict';
 
 angular
-.module("anterApp", ["ngRoute", "ngMaterial"])
-.config(function($routeProvider, $mdThemingProvider) {
+.module("anterApp", ["ngRoute", "ngMaterial", 'jobOffers', 'pascalprecht.translate'] )
+.config(function($routeProvider, $translateProvider) {
+	
+	$translateProvider.useStaticFilesLoader({
+		prefix: 'locale/locale-',
+		suffix: '.json'
+	});	
+	$translateProvider.preferredLanguage('pl_PL');
+
 	
     $routeProvider
     .when("/", {
@@ -30,22 +37,13 @@ angular
     .when("/foreignersService", {
     	templateUrl : "foreignersService.html"
     })
-    
-    .when("/workNetherlands", {
-    	templateUrl : "workNetherlands.html"
-    })
-    .when("/workFrance", {
-    	templateUrl : "workFrance.html"
-    })
-    .when("/workGermany", {
-    	templateUrl : "workGermany.html"
-    })
-    .when("/workBelgium", {
-    	templateUrl : "workBelgium.html"
+
+    .when("/workOffers", {
+    	templateUrl : "workOffers.html"
     })
     
 })	
-.controller('MenuCtrl', function MenuCtrl($mdDialog, $location) {
+.controller('MenuCtrl', function MenuCtrl($mdDialog, $location, $translate) {
 	var originatorEv;
 	this.openMenu = function($mdMenu, ev) {
 		originatorEv = ev;
@@ -54,6 +52,11 @@ angular
 	
 	this.menuButtonClick = function(routeStr) {
 		$location.path(routeStr);
+	};
+})
+.controller('LangCtrl', function($translate) {
+	this.changeLang = function(lang) {
+		$translate.use(lang);
 	};
 });
 
