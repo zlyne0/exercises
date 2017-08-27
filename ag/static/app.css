@@ -1,5 +1,5 @@
 body {
-    background-color: #F4F4F4";
+    background-color: #ffffcc";
     
     color: #black;
 	margin: 0px;
@@ -7,7 +7,9 @@ body {
 }
 
 .main-section {
-	background-color: #F4F4F4;
+	margin: 0px;
+	padding: 0px;
+	background-color: #ffffcc;
 }
 
 
@@ -20,6 +22,8 @@ body {
 }
 
 .footer {
+	maring: 0px;
+    padding: 0px;	
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -27,7 +31,6 @@ body {
     background-color: #C0B283;
     color: black;
     text-align: center;
-    padding: 1rem;	
 }
 
 .menu-section {

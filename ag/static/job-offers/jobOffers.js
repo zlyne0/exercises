@@ -17,6 +17,7 @@ angular.module('jobOffers', [ 'ngRoute', 'ngSanitize' ])
 	controller : function($attrs, jobOffersData) {
 		var ctrl = this;
 		var selectedCountries = JSON.parse($attrs.countries);
+		ctrl.actualJobOffer = null;
 		
 		ctrl.jobByCountry = {};
 		for (var i=0; i<jobOffersData.length; i++) {
@@ -27,13 +28,13 @@ angular.module('jobOffers', [ 'ngRoute', 'ngSanitize' ])
 				} else {
 					ctrl.jobByCountry[country].push(jobOffersData[i]); 
 				}
+				ctrl.actualJobOffer = jobOffersData[i];
 			}
 		}
 		
-		ctrl.actualJobOffer = null;
-		if (jobOffersData.length > 0) {
-			ctrl.actualJobOffer = jobOffersData[0];
-		}
+//		if (jobOffersData.length > 0) {
+//			ctrl.actualJobOffer = jobOffersData[0];
+//		}
 		
 		ctrl.showJobOffer = function(jobOffer) {
 			ctrl.actualJobOffer = jobOffer;
