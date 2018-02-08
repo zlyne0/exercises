@@ -1,0 +1,27 @@
+<div class="modal" bsModal #modal="bs-modal" tabindex="-1" role="dialog">
+	
+	<div class="modal-dialog">
+		<div class="modal-content">
+		
+			<div class="modal-header">
+				<h4 class="modal-title pull-left">Add param to product "{{product.name}}"</h4>
+				<button type="button" class="close pull-right" aria-label="Close"
+					(click)="addParamCloseModal()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				
+				<form class="form-horizontal">
+					<param-details [editedParam]="param"></param-details>
+				</form>
+				
+			</div>
+			<div class="modal-footer">
+				<button (click)="addParamCloseModal()">Cancel</button>
+				<button (click)="confirmAddParam()">Save</button>
+			</div>
+		
+		</div>
+	</div>
+</div>	

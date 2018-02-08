@@ -1,0 +1,15 @@
+<table class="table table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th>Product Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let product of products"
+			(click)="selectProduct(product)"
+			[ngClass]="{'selected-product' : selectedProduct && selectedProduct.id === product.id}"
+			>
+			<td>{{ product.name }}</td>
+		</tr>
+	</tbody>
+</table>

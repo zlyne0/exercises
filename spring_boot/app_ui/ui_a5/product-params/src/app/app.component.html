@@ -1,0 +1,10 @@
+<div class="row">
+	
+	<div class="col-sm-2">
+		<app-product-list (onSelectProduct)="onSelProd($event)"></app-product-list>
+	</div>
+	
+	<div class="col-sm-10">
+		<product-details [changeProductListener]="changeProductObservable"> </product-details>
+	</div>
+</div>	

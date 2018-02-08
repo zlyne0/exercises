@@ -1,0 +1,36 @@
+<div *ngIf="product != null">
+
+product name <b>{{product.name}}</b>
+<br>
+<br>
+
+	<button type="button" class="btn btn-primary" (click)="addParamDialog()">add param</button>
+
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Value</th>
+				<th>Big value</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let param of productParameters"
+				(click)="selectParam(param)"
+				[ngClass]="{'selected-param' : selectedParam && selectedParam.id === param.id}"
+			>
+				<td>{{ param.type.name }}</td>
+				<td>{{ param.value }}</td>
+				<td>{{ param.bigValue }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<param-details-modal 
+		[product]="product" 
+		[openModalListener]="openModalListener"
+		(confirmParamListener)="onAddParam($event)"
+	></param-details-modal>
+</div>
+
+
