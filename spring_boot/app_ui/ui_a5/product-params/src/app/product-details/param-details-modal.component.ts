@@ -20,10 +20,9 @@ export class ParamDetailsModalComponent implements OnInit, OnDestroy {
     @Input() openModalListener : Observable<ProductParam>
     @Output() confirmParamListener : Subject<ProductParam> = new Subject<ProductParam>()
 
-    param : ProductParam
+    param : ProductParam = new ProductParam()
     
     constructor( private modalService: BsModalService ) {
-        this.param = new ProductParam(null, null, null, null, null)
     }
     
     ngOnInit() {

@@ -15,10 +15,9 @@ export class ParamDetailsComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription
     
     productParamsTypes : ProductParamType[]
-    @Input() editedParam : ProductParam
+    @Input() editedParam : ProductParam = new ProductParam()
     
     constructor( private productListService: ProductListService) {
-        this.editedParam = new ProductParam(null, null, null, null, null)
     }
     
     ngOnInit() {

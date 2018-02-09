@@ -28,15 +28,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
     
     ngOnInit() {
-        const self = this;
         this.subscriptions = this.changeProductListener.subscribe(product => {
-            self.product = product
-            self.subscriptions.add(this.productListService.getProductParameters(product).subscribe(params => {
-                self.productParameters = params;
-            }));
+            this.product = product
+            this.fetchProductParmeters(product)
         });
     }
 
+    private fetchProductParmeters(product: Product) {
+        this.subscriptions.add(this.productListService.getProductParameters(product)
+            .subscribe(params => {
+                this.productParameters = params;
+            })
+        );
+    }
+    
     ngOnDestroy() {
         this.subscriptions.unsubscribe()
     }
@@ -46,11 +51,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
 
     addParamDialog() {
-        this.openModalListener.next(new ProductParam(null, null, null, null, null));
+        let p = new ProductParam()
+        p.productId = this.product.id
+        
+        this.openModalListener.next(p);
     }
 
     onAddParam(addedProductParam : ProductParam) {
-        console.log('addedProductParam ', addedProductParam)
+        console.log('saveProductParam ', addedProductParam)
+        this.productListService.createProductParam(addedProductParam)
+            .subscribe(p => {
+                this.fetchProductParmeters(this.product)
+            });
     }
     
 }

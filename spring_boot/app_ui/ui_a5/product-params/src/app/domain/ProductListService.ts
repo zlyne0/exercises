@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
 
 import { Product } from './Product'
@@ -22,6 +23,13 @@ export class ProductListService {
     
     getProductParamTypeDictionary() {
         return this.http.get<ProductParamType[]>('/rest/parameterType/list');
+    }
+    
+    createProductParam(param : ProductParam) : Observable<ProductParam> {
+        return this.http.post('/rest/product/' + param.productId + '/params', param)
+            .map(item => {
+                return new ProductParam(item.id, item.productId, item.type, item.value, item.bigValue);
+            });
     }
     
 }

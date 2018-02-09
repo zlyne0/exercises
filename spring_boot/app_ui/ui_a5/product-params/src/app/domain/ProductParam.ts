@@ -2,11 +2,11 @@ import { ProductParamType } from './ProductParamType'
 
 export class ProductParam {
     constructor(
-        public id: Number, 
-        public productId: Number,
-        public value: String,
-        public bigValue : String,
-        public type : ProductParamType
+        public id: Number = null,
+        public productId: Number = null,
+        public value: String = null,
+        public bigValue : String = null,
+        public type : ProductParamType = null
     ) {
     }
 }
