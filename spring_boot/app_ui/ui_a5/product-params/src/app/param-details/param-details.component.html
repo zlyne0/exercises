@@ -1,18 +1,19 @@
 	<div class="form-group">
-		<label class="control-label col-sm-2" for="parameterTypesId">Parameter type</label>
+		<label class="control-label col-sm-2" for="parameterTypesId2">Parameter type</label>
 		<div class="col-sm-10">
-			
-			<div class="btn-group" dropdown>
-				<button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
-					{{editedParam == null || editedParam.type == null ? ' ... ' : editedParam.type.name}} <span class="caret"></span>
-				</button>
-				<ul *dropdownMenu class="dropdown-menu" role="menu">
-					<li *ngFor="let paramType of productParamsTypes">
-						<a class="dropdown-item" href="#" (click)="changeParamType(paramType)">{{paramType.name}}</a>
-					</li>							
-				</ul>
-			</div>
-			
+			<select 
+				class="form-control" id="parameterTypesId2" 
+				required 
+				[(ngModel)]="editedParam.type" 
+				name="type"
+				#paramTypeInput="ngModel">
+				<option *ngFor="let paramType of productParamsTypes" [ngValue]="paramType">{{paramType.name}}</option>
+			</select>
+					
+			<div [hidden]="paramTypeInput.valid || paramTypeInput.pristine" class="alert alert-danger">
+			Type is required
+			</div>					
+					
 		</div>
 	</div>
 	
@@ -20,7 +21,12 @@
 		<label class="control-label col-sm-2" for="parameterValueId">Parameter value</label>
 		<div class="col-sm-10">
 			<input id="parameterValueId" type="text" class="form-control"
-				[(ngModel)]="editedParam.value">							
+				required
+				[(ngModel)]="editedParam.value" 
+				#paramValueInput="ngModel">							
+			<div [hidden]="paramValueInput.valid || paramValueInput.pristine" class="alert alert-danger">
+			Value is required
+			</div>					
 		</div>
 	</div>
 

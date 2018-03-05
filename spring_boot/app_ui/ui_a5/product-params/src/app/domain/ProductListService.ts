@@ -13,12 +13,19 @@ export class ProductListService {
 
     }
 
-    getProducts() {
-        return this.http.get<Product[]>('/rest/product/list');
+    getProducts() : Observable<Product[]> {
+        return this.http.get<Product[]>('/rest/product/list')
+            .map(res => {
+                let products : Array<Product> = new Array<Product>()
+                for (let i=0; i<res.length; i++) {
+                    products.push(new Product(res[i].name, res[i].id))
+                } 
+                return products;
+            });
     }
 
     getProductParameters(product : Product) {
-        return this.http.get<ProductParam[]>('/rest/product/' + product.id + '/parameters')
+        return this.http.get<ProductParam[]>(`/rest/product/${product.id}/parameters`)
     }
     
     getProductParamTypeDictionary() {
@@ -26,9 +33,13 @@ export class ProductListService {
     }
     
     createProductParam(param : ProductParam) : Observable<ProductParam> {
-        return this.http.post('/rest/product/' + param.productId + '/params', param)
+        return this.http.post<ProductParam>(`/rest/product/${param.productId}/params`, param)
             .map(item => {
-                return new ProductParam(item.id, item.productId, item.type, item.value, item.bigValue);
+                return new ProductParam(
+                    item.id, item.productId, 
+                    item.value, item.bigValue,
+                    new ProductParamType(item.type.id, item.type.name)
+                );
             });
     }
     
