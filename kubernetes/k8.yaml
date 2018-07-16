@@ -1,0 +1,89 @@
+--- #env configuration test/pre/prod
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-node-config
+  labels:
+    app: hello-node
+data:
+  ENV_STR_CONFIG: "env str from config"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-node
+  labels:
+    app: hello-node
+    tier: backend
+spec:
+  type: NodePort
+  ports:
+  - port: 8025
+    protocol: TCP
+    targetPort: 8025
+  selector:
+    run: hello-node
+    app: hello-node
+  sessionAffinity: None
+  sessionAffinity: None   
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+   name: hello-node
+spec:
+   replicas: 1
+   template:
+     metadata:
+       labels:
+        run: hello-node
+        app: hello-node
+        tier: backend
+     spec:
+       containers:
+       - name: hello-node
+         image: hello-node:latest
+         imagePullPolicy: Never
+         ports:
+         - containerPort: 8025
+         readinessProbe:
+            httpGet:
+                path: /
+                port: 8025
+            initialDelaySeconds: 30
+            periodSeconds: 5
+         env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONTAINER_NAME
+              value: hello-node 
+            - name: ENV_STR
+              valueFrom:
+                configMapKeyRef:
+                  name: hello-node-config
+                  key: ENV_STR_CONFIG
+---         
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-node-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /hello-node
+        backend:
+          serviceName: hello-node
+          servicePort: 8025
