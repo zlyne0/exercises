@@ -25,7 +25,9 @@
 	</modules>
 
     <properties>
-		<docker.image.prefix>prod_param_app</docker.image.prefix>
+		<docker.image.prefix>docker_service_network</docker.image.prefix>
+		
+		<com.spotify.docker.maven.plugin>0.4.11</com.spotify.docker.maven.plugin>
 	</properties>
 	
 	<dependencyManagement>

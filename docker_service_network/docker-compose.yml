@@ -1,0 +1,29 @@
+discovery:
+  image: 'docker_service_network/discovery'
+  ports:
+    - "18761:18761"
+gateway:
+  image: 'docker_service_network/gateway'
+  ports:
+    - "19000:19000"
+a:
+  image: 'docker_service_network/a'
+  ports:
+    - "19001:19001"
+b:
+  image: 'docker_service_network/b'
+  ports:
+    - "19002:19002"
+c:
+  image: 'docker_service_network/c'
+  ports:
+    - "19003:19003"
+d:
+  image: 'docker_service_network/d'
+  ports:
+    - "19004:19004"
+e:
+  image: 'docker_service_network/e'
+  ports:
+    - "19005:19005"
+    
