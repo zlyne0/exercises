@@ -1,0 +1,22 @@
+<p>student works!</p>
+
+
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit(studentForm.value)">
+
+    <div>
+        <label for="firstnameId">Imie</label>
+        <input id="firstnameId" type="text" formControlName="firstname" />
+    </div>
+
+    <div>
+        <label for="lastnameId">Nazwisko</label>
+        <input id="lastnameId" type="text" formControlName="lastname" />
+    </div>
+
+    <div>
+        <label for="birthdateId">Data urodzenia</label>
+        <input id="birthdateId" type="text" formControlName="birthdate" />
+    </div>
+
+    <button class="button" type="submit">Zapisz</button>
+</form>
