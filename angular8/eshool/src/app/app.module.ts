@@ -11,6 +11,8 @@ import { StudentsListComponent } from './students-list/students-list.component';
 import { MainpanelComponent } from './mainpanel/mainpanel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AgePipe } from './age.pipe';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     StudentComponent,
     TeacherComponent,
     StudentsListComponent,
-    MainpanelComponent
+    MainpanelComponent,
+    AgePipe
   ],
   imports: [
     MatTableModule,
@@ -35,6 +39,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTooltipModule,
 
     BrowserModule,
     AppRoutingModule,
