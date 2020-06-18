@@ -9,6 +9,7 @@ import { StudentService } from '../student/student.service';
 export class StudentsListComponent implements OnInit {
 
   students;
+  displayedColumns: string[] = ['firstname', 'lastname', 'birthdate'];
 
   constructor(private studentService : StudentService) { 
   }

@@ -1,22 +1,27 @@
 <p>student works!</p>
 
-
 <form [formGroup]="studentForm" (ngSubmit)="onSubmit(studentForm.value)">
 
     <div>
-        <label for="firstnameId">Imie</label>
-        <input id="firstnameId" type="text" formControlName="firstname" />
+        <mat-form-field appearance="standard">
+            <mat-label>Imię</mat-label>
+            <input matInput placeholder="Imię" formControlName="firstname">
+        </mat-form-field>
     </div>
 
     <div>
-        <label for="lastnameId">Nazwisko</label>
-        <input id="lastnameId" type="text" formControlName="lastname" />
-    </div>
+        <mat-form-field appearance="standard">
+            <mat-label>Nazwisko</mat-label>
+            <input matInput placeholder="Nazwisko" formControlName="lastname">
+        </mat-form-field>
+    </div>    
 
-    <div>
-        <label for="birthdateId">Data urodzenia</label>
-        <input id="birthdateId" type="text" formControlName="birthdate" />
-    </div>
+    <mat-form-field>
+        <mat-label>Data urodzenia</mat-label>
+        <input matInput [matDatepicker]="dp" formControlName="birthdate">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+    </mat-form-field>
 
-    <button class="button" type="submit">Zapisz</button>
+    <button mat-raised-button color="primary" type="submit">Zapisz</button>
 </form>

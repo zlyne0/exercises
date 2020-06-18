@@ -1,9 +1,22 @@
 <p>students-list works!</p>
 
-<div *ngFor="let student of students | async">
+<mat-table [dataSource]="students" class="mat-elevation-z8">
+    <ng-container matColumnDef="firstname">
+        <mat-header-cell *matHeaderCellDef>Imię</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstname}} </mat-cell>
+    </ng-container>
 
-    <span>{{ student.firstname }}</span>
-    <span>{{ student.lastname }}</span>
-    <span>{{ student.birthdate }}</span>
+    <ng-container matColumnDef="lastname">
+        <mat-header-cell *matHeaderCellDef>Nazwisko</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
+    </ng-container>
 
-</div>
+    <ng-container matColumnDef="birthdate">
+        <mat-header-cell *matHeaderCellDef>Wiek</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.birthdate}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>    
+
+</mat-table>
