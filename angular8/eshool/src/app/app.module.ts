@@ -21,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTooltipModule,
+    MatCheckboxModule,
 
     BrowserModule,
     AppRoutingModule,
