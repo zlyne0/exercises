@@ -8,10 +8,12 @@ import { AppComponent } from './app.component';
 import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { StudentsListComponent } from './students-list/students-list.component';
+import { SendMessageDialog } from './students-list/send-message-dialog/send-message-dialog.component';
 import { MainpanelComponent } from './mainpanel/mainpanel.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AgePipe } from './age.pipe';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -22,6 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     StudentComponent,
     TeacherComponent,
     StudentsListComponent,
+    SendMessageDialog,
     MainpanelComponent,
     AgePipe
   ],
@@ -42,6 +46,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatNativeDateModule,
     MatTooltipModule,
     MatCheckboxModule,
+    MatDialogModule,
 
     BrowserModule,
     AppRoutingModule,

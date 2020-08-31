@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Send messages</h1>
+
+<div mat-dialog-content>
+    list of users {{ data.name }}
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">No Thanks</button>
+    <button mat-button (click)="onOk()" cdkFocusInitial>Ok</button>
+</div>
