@@ -52,9 +52,18 @@ export class StudentsListComponent implements OnInit {
   }
 
   sendMsgOpenDialog() {
+    let selectedStudents = []
+
+    for (let item of this.selection.selected) {
+      selectedStudents.push(item);
+    }
+
     const dialogDef = this.matDialog.open(SendMessageDialog, { 
       width: '450px', 
-      data: { name: 'some name', animal: 'some animal' } 
+      data: { 
+        name: 'some name', 
+        students: selectedStudents
+      } 
     });
     dialogDef.afterClosed().subscribe(result => {
       console.log('Dialog result: ' + result);

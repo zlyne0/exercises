@@ -1,7 +1,10 @@
 <h1 mat-dialog-title>Send messages</h1>
 
 <div mat-dialog-content>
-    list of users {{ data.name }}
+    Send message to students:
+    <div *ngFor="let student of data.students">
+        {{ student.firstname }} {{ student.lastname }}
+    </div>
 </div>
 
 <div mat-dialog-actions>
