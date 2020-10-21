@@ -25,6 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     StudentsListComponent,
     SendMessageDialog,
     MainpanelComponent,
-    AgePipe
+    AgePipe,
+    ChatComponent
   ],
   imports: [
     MatTableModule,

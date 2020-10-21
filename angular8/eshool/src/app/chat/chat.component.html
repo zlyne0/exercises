@@ -1,0 +1,12 @@
+<p>chat works!</p>
+
+<form [formGroup]="chatForm">
+    <textarea matInput style="width: 100%; height: 200px; border:1px solid red;" readonly formControlName="messages"
+    #textarea [scrollTop]="textarea.scrollHeight"></textarea>
+
+    <br/>
+
+    <input matInput style="width: 100%; border: 1px solid red;" formControlName="inputText" (keyup.enter)="onSendMsg(chatForm.value)"/>
+
+</form>
+
