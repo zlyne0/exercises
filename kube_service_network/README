@@ -1,0 +1,9 @@
+mvn package docker:build
+
+http://localhost:19000/a/rest/echo/zupa
+
+curl http://localhost:19005/rest/echo/zzz
+
+curl http://localhost:19000/d/rest/echo/zzz
+
+curl http://localhost:19000/e/rest/echo/zzz

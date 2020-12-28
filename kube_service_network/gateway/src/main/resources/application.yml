@@ -1,0 +1,32 @@
+# when commented spring bind to all interfaces
+#server.address: 127.0.0.1
+server.port: 19000
+
+#security.user.password=password
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+
+zuul:
+  routes:
+    a:
+      path: /a/**
+      url: http://localhost:19001/
+    b:
+      path: /b/**
+      url: http://localhost:19002/
+    c:
+      path: /c/**
+      url: http://localhost:19003/
+    d:
+      path: /d/**
+      url: http://localhost:19004/
+    e:
+      path: /e/**
+      url: http://localhost:19005/
+
+
+      
