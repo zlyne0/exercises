@@ -1,17 +1,18 @@
-spring.application.name=docker.service.network.c
-# when commented spring bind to all interfaces
-#server.address: 127.0.0.1
-server.port: 19003
-server.contextPath: /
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
+server:
+  contextPath: /
+  port: 8080
+spring:
+  application:
+    name: docker.service.network.c
 
-#security.user.password=password
+service_d_url: ${service_d_url}
+service_e_url: ${service_e_url}
 
-logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter=DEBUG
-logging.level.org.springframework.security: DEBUG
-
-#eureka.client.serviceUrl.defaultZone=http://127.0.0.1:18761/eureka/
-#eureka.instance.hostname=localhost
-#eureka.instance.prefer-ip-address=true
-
-service_d_url: http://localhost:19004
-service_e_url: http://localhost:19005
