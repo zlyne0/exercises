@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-network-config
+data: 
+  service_b_url: http://service-network-b:8080
+  service_c_url: http://service-network-c:8080
+  service_d_url: http://service-network-d:8080
+  service_e_url: http://service-network-e:8080

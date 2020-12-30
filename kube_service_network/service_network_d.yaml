@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-network-d 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: service-network-d
+  template:
+    metadata:
+      labels:
+        run: service-network-d
+    spec:
+      containers:
+      - name: service-network-d
+        image: docker_service_network/d:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-network-d
+  labels:
+    run: service-network-d
+    tier: backend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: service-network-d
+  sessionAffinity: None
+        

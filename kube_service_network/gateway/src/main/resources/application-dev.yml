@@ -1,6 +1,6 @@
 # when commented spring bind to all interfaces
 #server.address: 127.0.0.1
-server.port: 8080
+server.port: 19000
 
 #security.user.password=password
 
@@ -14,16 +14,19 @@ zuul:
   routes:
     a:
       path: /a/**
-      url: http://service-network-a:8080/
+      url: http://localhost:19001/
     b:
       path: /b/**
-      url: http://service-network-b:8080/
+      url: http://localhost:19002/
     c:
       path: /c/**
-      url: http://service-network-c:8080/
+      url: http://localhost:19003/
     d:
       path: /d/**
-      url: http://service-network-d:8080/
+      url: http://localhost:19004/
     e:
       path: /e/**
-      url: http://service-network-e:8080/
+      url: http://localhost:19005/
+
+
+      
