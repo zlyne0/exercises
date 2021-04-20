@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-network-c 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: service-network-c
+  template:
+    metadata:
+      labels:
+        run: service-network-c
+    spec:
+      containers:
+      - name: service-network-c
+        image: docker_service_network/c:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: service_d_url
+          valueFrom: 
+            configMapKeyRef:
+              name: service-network-config
+              key: service_d_url 
+        - name: service_e_url
+          valueFrom: 
+            configMapKeyRef:
+              name: service-network-config
+              key: service_e_url 
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-network-c
+  labels:
+    run: service-network-c
+    tier: backend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: service-network-c
+  sessionAffinity: None
+        

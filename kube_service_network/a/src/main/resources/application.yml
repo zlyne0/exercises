@@ -1,0 +1,16 @@
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
+server:
+  contextPath: /
+  port: 8080
+service_b_url: ${service_b_url}
+service_c_url: ${service_c_url}
+spring:
+  application:
+    name: docker.service.network.a

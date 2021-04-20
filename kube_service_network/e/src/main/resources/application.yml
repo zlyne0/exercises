@@ -1,0 +1,14 @@
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
+server:
+  contextPath: /
+  port: 8080
+spring:
+  application:
+    name: docker.service.network.e
