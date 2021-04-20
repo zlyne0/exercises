@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChatService } from './ChatService';
 
 @Component({
   selector: 'app-chat',
@@ -10,7 +11,7 @@ export class ChatComponent implements OnInit {
 
   chatForm : FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private chatService : ChatService) {
     this.chatForm = this.formBuilder.group({
       'messages': '',
       'inputText': ''
@@ -25,9 +26,12 @@ export class ChatComponent implements OnInit {
   }
 
   onSendMsg(chatFormData: any) {
+    var msg = chatFormData['inputText'];
+    this.chatService.sendMsg('nik', msg);
+
     var allMsgs = this.chatForm.controls['messages'].value;
     var newMsg = '<nick> ' + chatFormData['inputText'];
-    this.chatForm.controls['messages'].setValue(allMsgs + '\r\n' + newMsg);
+    //this.chatForm.controls['messages'].setValue(allMsgs + '\r\n' + newMsg);
 
     this.chatForm.controls['inputText'].setValue('');
   }
