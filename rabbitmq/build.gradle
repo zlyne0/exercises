@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+def junitJupiterVersion = '5.4.2'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'com.rabbitmq:amqp-client:5.13.0'
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    testImplementation "org.testcontainers:testcontainers:1.15.3"
+    testImplementation "org.testcontainers:junit-jupiter:1.15.3"
+
+    testImplementation "org.testcontainers:rabbitmq:1.15.3"
+}
+
+test {
+    useJUnitPlatform()
+}
