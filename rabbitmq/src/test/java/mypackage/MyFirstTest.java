@@ -6,6 +6,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.CancelCallback;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -29,8 +30,8 @@ import org.testcontainers.utility.DockerImageName;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MyFirstTest {
 
-    public static final String MY_FIRST_EXCHANGE = "pl.nn.gacek.gap.exchange";
-    public static final String MY_FIRST_QUEUE = "pl.nn.gacek.gap.queue";
+    public static final String MY_FIRST_EXCHANGE = "first.exchange";
+    public static final String MY_FIRST_QUEUE = "first.queue";
     private static RabbitMQContainer container = new RabbitMQContainer(DockerImageName.parse("rabbitmq:3.7.25-management-alpine"));
 
     static String host = "localhost";
@@ -75,8 +76,12 @@ public class MyFirstTest {
         ) {
             //channel.queueDeclare(MY_R_QUEUE_NAME, true, false, false, null);
 
+            channel.queueDeclare("XXX", false, false, false, null);
+
             String message = "Hello World!";
-            channel.basicPublish(MY_FIRST_EXCHANGE, "#", null, message.getBytes());
+            channel.basicPublish("", "XXX", null, message.getBytes());
+            AMQP.Confirm.SelectOk selectOk = channel.confirmSelect();
+            System.out.println("selectOk: " + selectOk);
 
             System.out.println(" [x] Sent '" + message + "'");
         }
@@ -98,23 +103,14 @@ public class MyFirstTest {
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel()
         ) {
+            channel.queueDeclare("XXX", false, false, false, null);
 
-            //channel.queueDeclare(MY_FIRST_QUEUE, true, false, false, null);
-
-
-//            DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-//                String message = new String(delivery.getBody(), "UTF-8");
-//                System.out.println(" [x] consumerTag: " + consumerTag);
-//                System.out.println(" [x] Received '" + message + "'");
-//                semaphore.release();
-//            };
-//            channel.basicConsume(MY_FIRST_QUEUE, true, deliverCallback, consumerTag -> {
-//                System.out.println("cancelCallback: " + consumerTag);
-//            });
-            channel.basicConsume(MY_FIRST_QUEUE, true, "ccTtaagg", new DeliverCallback() {
+            channel.basicConsume("XXX", false, new DeliverCallback() {
                 @Override
                 public void handle(String consumerTag, Delivery delivery) throws IOException {
                     String message = new String(delivery.getBody(), "UTF-8");
+                    channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
+
                     System.out.println(" [x] consumerTag: " + consumerTag);
                     System.out.println(" [x] Received '" + message + "'");
                     semaphore.release();
@@ -128,7 +124,7 @@ public class MyFirstTest {
 
         }
         System.out.println(" [*] Waiting for messages.");
-        semaphore.acquire(2);
+        semaphore.acquire(1);
         System.out.println(" [*] get message and finish program");
     }
 }
