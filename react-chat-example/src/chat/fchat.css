@@ -1,0 +1,12 @@
+.mainWindow {
+    border-style: solid;
+}
+
+.messagesBox {
+    border-style: dashed;
+    min-height: 400px;
+}
+
+.inputMessage {
+    border-style: dotted;
+}
