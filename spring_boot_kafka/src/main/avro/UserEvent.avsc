@@ -1,0 +1,11 @@
+{
+  "namespace": "kafka.example3.avro",
+  "type": "record",
+  "name": "UserEvent",
+  "fields": [
+    {"name": "id", "type": "long" },
+    {"name": "firstname", "type": "string"},
+    {"name": "lastname", "type": "string"},
+    {"name": "age", "type": "int"}
+  ]
+}
