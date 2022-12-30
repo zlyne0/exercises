@@ -35,6 +35,6 @@ class ParamIdGenerator : IdentifierGenerator {
     }
 
     companion object {
-        const val GENERATOR = "com.example.demo.param.hibernate.ParamIdGenerator"
+        const val GENERATOR = "promitech.ecc.param.hibernate.ParamIdGenerator"
     }
 }

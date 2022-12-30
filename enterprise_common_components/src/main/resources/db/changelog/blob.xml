@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
+    <changeSet id="2022-06-20 13:49" author="Duncan Idaho">
+
+        <createTable tableName="ecc_blob">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="param_id_pk" />
+            </column>
+            <column name="content" type="blob">
+                <constraints nullable="false" />
+            </column>
+            <column name="INSERT_DATE_TIME" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="UPDATE_DATE_TIME" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="version" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="ecc_blob_seq" cycle="false" startValue="1000" />
+    </changeSet>
+</databaseChangeLog>
