@@ -9,8 +9,6 @@
 		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
 		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
 
-    <include file="param.xml" relativeToChangelogFile="true"/>
-    <include file="blob.xml" relativeToChangelogFile="true"/>
-    <include file="key_lock.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/key_lock.xml" relativeToChangelogFile="false" />
 
 </databaseChangeLog>

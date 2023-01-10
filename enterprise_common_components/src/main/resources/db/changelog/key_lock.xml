@@ -8,26 +8,22 @@
 		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
 		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
 		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
-    <changeSet id="2022-06-20 13:49" author="Duncan Idaho">
 
-        <createTable tableName="ecc_blob">
+    <changeSet id="2023-01-09 13:49" author="Space Invader">
+        <createTable tableName="ecc_key_lock">
             <column name="id" type="bigint">
-                <constraints primaryKey="true" primaryKeyName="ecc_blob_id_pk" />
+                <constraints primaryKey="true" primaryKeyName="ecc_key_lock_id_pk" />
             </column>
-            <column name="content" type="blob">
-                <constraints nullable="false" />
-            </column>
-            <column name="INSERT_DATE_TIME" type="datetime">
-                <constraints nullable="false" />
-            </column>
-            <column name="UPDATE_DATE_TIME" type="datetime">
-                <constraints nullable="false" />
-            </column>
-            <column name="version" type="int">
+            <column name="key_value" type="varchar2(50)">
                 <constraints nullable="false" />
             </column>
         </createTable>
 
-        <createSequence sequenceName="ecc_blob_seq" cycle="false" startValue="1000" />
+        <createSequence sequenceName="ecc_key_lock_seq" cycle="false" startValue="10000" incrementBy="50"/>
+
+        <createIndex tableName="ecc_key_lock" indexName="ecc_key_lock_key_idx">
+            <column name="key_value" />
+        </createIndex>
     </changeSet>
+
 </databaseChangeLog>
