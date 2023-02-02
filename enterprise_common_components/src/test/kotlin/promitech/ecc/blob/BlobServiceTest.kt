@@ -3,29 +3,16 @@ package promitech.ecc.blob
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing
-import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
-import org.springframework.transaction.annotation.Propagation
-import org.springframework.transaction.annotation.Transactional
+import promitech.ecc.BaseITTest
 import promitech.ecc.TransactionService
 
-@DataJpaTest
-@EnableAutoConfiguration(exclude = [AutoConfigureTestDatabase::class])
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@EnableJpaAuditing
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@ContextConfiguration(classes = [BlobRepository::class, BlobService::class, TransactionService::class])
+@ContextConfiguration(classes = [BlobConfiguration::class, TransactionService::class])
 @TestPropertySource(
-    locations = ["classpath:test.properties"],
     properties = ["spring.liquibase.change-log=classpath:db.test.changelog/blob_test.xml"]
 )
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
-class BlobServiceTest {
+class BlobServiceTest: BaseITTest() {
 
     @Autowired
     private lateinit var blobService: BlobService

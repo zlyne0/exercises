@@ -3,35 +3,22 @@ package promitech.ecc.lock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing
-import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
 import org.springframework.transaction.TransactionSystemException
-import org.springframework.transaction.annotation.Propagation
-import org.springframework.transaction.annotation.Transactional
+import promitech.ecc.BaseITTest
 import promitech.ecc.TransactionService
 import java.util.concurrent.CountDownLatch
 import javax.persistence.LockTimeoutException
 
-@DataJpaTest
-@EnableAutoConfiguration(exclude = [AutoConfigureTestDatabase::class])
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@EnableJpaAuditing
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@ContextConfiguration(classes = [LockService::class, TransactionService::class])
-@TestPropertySource(
-    locations = ["classpath:test.properties"],
-    properties = [
+@ContextConfiguration(classes = [
+    TransactionService::class,
+    KeyLockConfiguration::class
+])
+@TestPropertySource(properties = [
         "spring.liquibase.change-log=classpath:db.test.changelog/key_lock_test.xml",
-        "lockService.lock.timeout=5000"
-    ]
-)
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
-class LockServiceTest {
+])
+class LockServiceTest: BaseITTest() {
 
     @Autowired
     private lateinit var lockService: LockService
@@ -51,7 +38,7 @@ class LockServiceTest {
                 countDownLatch2.countDown()
                 sleep(1000)
                 // sleep to be sure thread two create lock,
-                // when broken lockservice implementation then crate string "twoone"
+                // when broken lockservice implementation then create string "twoone"
                 str += "one"
             })
         })
