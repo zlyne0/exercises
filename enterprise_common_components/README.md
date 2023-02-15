@@ -1,6 +1,6 @@
 ## Enterprise common components
-Examples of some common enterprise patterns/components on edge of Domain Driven Design, 
-object-oriented programing and hibernate.
+Examples of some common enterprise patterns/components on edge of object-oriented programing,
+functional programing, spring and hibernate.
 
 JPA entities required empty default constructor so add maven kotlin compiler plugin jpa.
 ```xml
@@ -47,8 +47,8 @@ Custom send provider for example by rest, or message broker.
 Functionality with param that run processing not often then for example 5 sec.
 Meybe library resilent4j?
 
-### TODO - async
-Allow run some task in parallel. Use thread pool,
+### async
+Allow run some tasks in parallel. Use thread pool,
 can gather results and exceptions.
 
 ### TODO - avro i protobuf
