@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
 import promitech.ecc.BaseITTest
-import promitech.ecc.blob.BlobConfiguration
 import java.time.LocalDate
 
 data class Contract(
@@ -22,7 +21,6 @@ data class Agent(
 )
 
 @ContextConfiguration(classes = [
-    BlobConfiguration::class,
     JsonConfiguration::class
 ])
 @TestPropertySource(

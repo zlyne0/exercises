@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
+
+    <changeSet id="2023-02-21 13:49" author="Space Invader">
+        <createTable tableName="ecc_outbox">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="ecc_outbox_id_pk" nullable="false" />
+            </column>
+            <column name="json_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar2(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="error_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_error_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="json_id"
+                                 baseTableName="ecc_outbox"
+                                 constraintName="fk_ecc_outbox_json_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ecc_blob"/>
+
+        <createSequence sequenceName="ecc_outbox_seq" cycle="false" startValue="10000" incrementBy="50"/>
+
+    </changeSet>
+
+</databaseChangeLog>

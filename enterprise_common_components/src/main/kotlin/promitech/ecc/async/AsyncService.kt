@@ -10,8 +10,12 @@ class AsyncService(
     private val executorThreadPool: ExecutorService = Executors.newFixedThreadPool(threadPoolNumber)
 ) {
 
+    fun <OUT> async(action: () -> OUT): CompletableFuture<OUT> {
+        return CompletableFuture<OUT>().completeAsync({ action() }, executorThreadPool)
+    }
+
     fun <IN, OUT> async(inputData: IN, action: (IN) -> OUT): CompletableFuture<OUT> {
-        return CompletableFuture<OUT>().completeAsync({ action.invoke(inputData) }, executorThreadPool)
+        return CompletableFuture<OUT>().completeAsync({ action(inputData) }, executorThreadPool)
     }
 
     fun <IN, OUT> runInParallel(inputDataList: List<Pair<IN, (IN) -> OUT>>): List<Pair<IN, Result<OUT>>> {
