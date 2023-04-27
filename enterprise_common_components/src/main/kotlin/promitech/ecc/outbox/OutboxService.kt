@@ -45,6 +45,11 @@ class OutboxService(
     private val clock: Clock
 ) {
 
+    interface AfterCompletionListener {
+        fun action(outboxEntityId: Long)
+    }
+    private val afterCompletionListeners = ArrayList<AfterCompletionListener>()
+
     private val asyncService = AsyncService()
 
     /**
@@ -76,6 +81,12 @@ class OutboxService(
     }
 
     private fun sendSingleMessage(outboxEntityId: Long) {
+        TransactionSynchronizationManager.registerSynchronization(object: TransactionSynchronization {
+            override fun afterCompletion(status: Int) {
+                afterCompletionListeners.forEach { listener -> listener.action(outboxEntityId) }
+            }
+        })
+
         val list = entityManager.createQuery("select oe from OutboxEntity oe where oe.id = :id")
             .setHint("javax.persistence.lock.timeout", lockTimeout)
             .setParameter("id", outboxEntityId)
@@ -91,15 +102,16 @@ class OutboxService(
             throw IllegalStateException("can not find action for outboxEntity type: " + outboxEntity.type)
         }
         val jsonObject = jsonService.loadObject(outboxEntity.jsonObjectId, configuration.clazz)
-//        try {
+        try {
             configuration.outboxAction.action(jsonObject)
 
             entityManager.createQuery("delete from OutboxEntity oe where oe.id = :id")
                 .setParameter("id", outboxEntityId)
                 .executeUpdate()
-//        } catch (e: Exception) {
-//        }
-//        outboxEntity.increaseErrorCount(LocalDateTime.now(clock))
+        } catch (e: Exception) {
+            outboxEntity.increaseErrorCount(LocalDateTime.now(clock))
+        }
+        entityManager.flush()
     }
 
     @Transactional(readOnly = true)
@@ -115,5 +127,9 @@ class OutboxService(
         return entityManager.createQuery("select oe from OutboxEntity oe where oe.id = :id")
             .setParameter("id", outboxEntityId.value)
             .singleResult as OutboxEntity
+    }
+
+    fun addAfterCompletionListener(afterCompletionListener: AfterCompletionListener) {
+        this.afterCompletionListeners.add(afterCompletionListener)
     }
 }
