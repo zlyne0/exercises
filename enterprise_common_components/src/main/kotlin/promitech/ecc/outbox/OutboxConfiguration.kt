@@ -35,7 +35,7 @@ class OutboxConfiguration {
 
     @Bean
     internal fun outboxService(
-        entityManager: EntityManager,
+        outboxRepository: OutboxRepository,
         jsonService: JsonService,
         transactionService: TransactionService,
         outboxRegistryService: OutboxRegistryService,
@@ -43,7 +43,7 @@ class OutboxConfiguration {
         lockTimeout: String,
         clock: Clock
     ): OutboxService {
-        return OutboxService(entityManager, jsonService, transactionService, outboxRegistryService, lockTimeout, clock)
+        return OutboxService(outboxRepository, jsonService, transactionService, outboxRegistryService, lockTimeout, clock)
     }
 
 }

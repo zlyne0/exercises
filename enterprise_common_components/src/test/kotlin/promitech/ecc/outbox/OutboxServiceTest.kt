@@ -105,7 +105,7 @@ class OutboxServiceTest: BaseITTest() {
             .describedAs("should not delete entity when error on action")
             .isEqualTo(countAfterAction)
 
-        val outboxEntity = transactionService.runInNewTransaction { outboxService.load(outboxEntityId) }
+        val outboxEntity = outboxService.load(outboxEntityId)
         assertThat(outboxEntity.errorCount).isEqualTo(1)
         assertThat(outboxEntity.lastErrorDate).isNotNull()
     }
