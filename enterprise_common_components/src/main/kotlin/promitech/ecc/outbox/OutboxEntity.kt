@@ -8,10 +8,9 @@ import javax.persistence.*
 @Table(name = "ecc_outbox")
 class OutboxEntity(
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ecc_outbox_seq")
-    @SequenceGenerator(name = "ecc_outbox_seq", allocationSize = 50)
-    val id: Long? = null,
+    @EmbeddedId
+    @AttributeOverride(name = "value", column = Column(name = "id"))
+    val id: OutboxEntityId,
 
     @Embedded
     @AttributeOverride(name = "value", column = Column(name = "json_id"))

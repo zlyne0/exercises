@@ -8,4 +8,8 @@ import javax.persistence.Embeddable
 data class BlobId(
     @Column(name = "blob_id")
     val value: Long
-): Serializable
+): Serializable {
+    companion object {
+        private const val serialVersionUID = 1L
+    }
+}

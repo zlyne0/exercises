@@ -129,7 +129,7 @@ class OutboxServiceTest: BaseITTest() {
 
     fun registerAfterSendMessageActionCompleted() {
         outboxService.addAfterCompletionListener(object: OutboxService.AfterCompletionListener {
-            override fun action(outboxEntityId: Long) {
+            override fun action(outboxEntityId: OutboxEntityId) {
                 sendMessageActionCompleted = true
             }
         })

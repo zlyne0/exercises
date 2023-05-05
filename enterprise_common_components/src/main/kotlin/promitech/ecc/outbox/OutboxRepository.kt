@@ -12,12 +12,22 @@ class OutboxRepository(
 ) {
 
     fun create(jsonObjectId: JsonObjectId, type: String): OutboxEntity {
-        val entity = OutboxEntity(jsonObjectId = jsonObjectId, type = type)
+        val entity = OutboxEntity(
+            id = generateId(),
+            jsonObjectId = jsonObjectId,
+            type = type
+        )
         entityManager.persist(entity)
         return entity
     }
 
-    fun findAndLock(outboxEntityId: Long, lockTimeout: String): OutboxEntity? {
+    fun generateId(): OutboxEntityId {
+        val numberId = entityManager.createNativeQuery("select ecc_outbox_seq.nextval from dual")
+            .singleResult as Number
+        return OutboxEntityId(numberId.toLong())
+    }
+
+    fun findAndLock(outboxEntityId: OutboxEntityId, lockTimeout: String): OutboxEntity? {
         val list = entityManager.createQuery("select oe from OutboxEntity oe where oe.id = :id")
             .setHint("javax.persistence.lock.timeout", lockTimeout)
             .setParameter("id", outboxEntityId)
@@ -29,7 +39,7 @@ class OutboxRepository(
         return list.get(0) as OutboxEntity
     }
 
-    fun delete(outboxEntityId: Long) {
+    fun delete(outboxEntityId: OutboxEntityId) {
         entityManager.createQuery("delete from OutboxEntity oe where oe.id = :id")
             .setParameter("id", outboxEntityId)
             .executeUpdate()
@@ -37,7 +47,7 @@ class OutboxRepository(
 
     fun load(outboxEntityId: OutboxEntityId): OutboxEntity {
         return entityManager.createQuery("select oe from OutboxEntity oe where oe.id = :id")
-            .setParameter("id", outboxEntityId.value)
+            .setParameter("id", outboxEntityId)
             .singleResult as OutboxEntity
     }
 

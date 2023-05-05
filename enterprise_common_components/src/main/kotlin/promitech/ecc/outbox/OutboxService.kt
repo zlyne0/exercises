@@ -49,7 +49,7 @@ class OutboxService(
 ) {
 
     interface AfterCompletionListener {
-        fun action(outboxEntityId: Long)
+        fun action(outboxEntityId: OutboxEntityId)
     }
     private val afterCompletionListeners = ArrayList<AfterCompletionListener>()
 
@@ -64,7 +64,7 @@ class OutboxService(
 
         val jsonId = jsonService.saveObject(objectData)
         val outboxEntity = repository.create(jsonId, objectData::class.java.name)
-        val outboxEntityId: Long = outboxEntity.id!!
+        val outboxEntityId = outboxEntity.id
 
         TransactionSynchronizationManager.registerSynchronization(object : TransactionSynchronization {
             override fun afterCommit() {
@@ -75,10 +75,10 @@ class OutboxService(
                 })
             }
         })
-        return OutboxEntityId(outboxEntityId)
+        return outboxEntityId
     }
 
-    private fun sendSingleMessage(outboxEntityId: Long) {
+    private fun sendSingleMessage(outboxEntityId: OutboxEntityId) {
         TransactionSynchronizationManager.registerSynchronization(object: TransactionSynchronization {
             override fun afterCompletion(status: Int) {
                 afterCompletionListeners.forEach { listener -> listener.action(outboxEntityId) }
