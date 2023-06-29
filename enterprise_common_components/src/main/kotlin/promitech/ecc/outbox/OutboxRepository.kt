@@ -3,12 +3,17 @@ package promitech.ecc.outbox
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import promitech.ecc.blob.json.JsonObjectId
+import java.time.Clock
+import java.time.Duration
+import java.time.LocalDateTime
 import javax.persistence.EntityManager
 import javax.persistence.LockModeType
 
 @Transactional(propagation = Propagation.MANDATORY)
 class OutboxRepository(
-    private val entityManager: EntityManager
+    private val entityManager: EntityManager,
+    private val clock: Clock,
+    private val reprocessEntitiesDuration: Duration
 ) {
 
     fun create(jsonObjectId: JsonObjectId, type: String): OutboxEntity {
@@ -56,6 +61,18 @@ class OutboxRepository(
             .setParameter("type", clazz.name)
             .singleResult
         return count as Long
+    }
+
+    fun findAllIds(): List<OutboxEntityId> {
+        val lastErrorData = LocalDateTime.now(clock).minus(reprocessEntitiesDuration)
+
+        return entityManager.createQuery("""
+            select oe.id 
+            from OutboxEntity oe
+            where oe.lastErrorDate is null or oe.lastErrorDate <= :lastErrorDate  
+        """.trimIndent())
+            .setParameter("lastErrorDate", lastErrorData)
+            .resultList as List<OutboxEntityId>
     }
 
 }

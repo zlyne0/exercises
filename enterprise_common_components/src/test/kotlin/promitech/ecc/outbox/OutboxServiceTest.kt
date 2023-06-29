@@ -26,6 +26,7 @@ data class Contract(
 ])
 @TestPropertySource(properties = [
     "spring.liquibase.change-log=classpath:db.test.changelog/outbox_test.xml",
+    "ecc.outbox.scheduler.enabled=false"
 ])
 class OutboxServiceTest: BaseITTest() {
 
@@ -37,6 +38,9 @@ class OutboxServiceTest: BaseITTest() {
 
     @Autowired
     private lateinit var outboxRegistryService: OutboxRegistryService
+
+    @Autowired
+    private lateinit var outboxRepository: OutboxRepository
 
     var sendMessageActionCompleted = false
 
@@ -125,6 +129,74 @@ class OutboxServiceTest: BaseITTest() {
 
         // then
         assertThat(exception).hasMessageStartingWith("can not find handler configuration for")
+    }
+
+    @Test
+    fun `should proceed entities`() {
+        // given
+        registerAfterSendMessageActionCompleted()
+        val countBeforeAction = outboxService.countByType(Contract::class.java)
+
+
+        var runOrder = ""
+        var entityCountOnAction = 0L
+
+        outboxRegistryService.registry(Contract::class.java, object: OutboxAction<Contract> {
+            override fun action(data: Contract) {
+                runOrder += "two"
+                entityCountOnAction = outboxService.countByType(Contract::class.java)
+            }
+        })
+
+        val contract = Contract("contractNumber1234", "contractProductName", 1003)
+        outboxService.saveObjectData(contract)
+
+
+        // when
+        outboxService.processIds()
+        runOrder += "one"
+
+        // then
+        assertThat(runOrder).isEqualTo("twoone")
+        assertThat(entityCountOnAction).isEqualTo(countBeforeAction+1)
+
+        val countAfterAction = outboxService.countByType(Contract::class.java)
+        assertThat(countBeforeAction)
+            .describedAs("should delete entity after successful action")
+            .isEqualTo(countAfterAction)
+
+    }
+
+    @Test
+    fun `should wait when try process the same entity`() {
+        // given
+        var runOrder = ""
+        outboxRegistryService.registry(Contract::class.java, object: OutboxAction<Contract> {
+            override fun action(data: Contract) {
+                runOrder += "two"
+            }
+        })
+
+        val contract = Contract("contractNumber1234", "contractProductName", 1003)
+        val outboxEntityId = outboxService.saveObjectData(contract)
+
+        val processIdsThread = Thread {
+            outboxService.processIds()
+        }
+
+        // when
+        transactionService.runInNewTransaction {
+            val outboxEntity = outboxRepository.findAndLock(outboxEntityId, "10000")
+            processIdsThread.start()
+            Thread.sleep(300) // give time to start and execute thread
+            outboxRepository.delete(outboxEntityId)
+        }
+
+        // then
+        processIdsThread.join()
+        assertThat(runOrder)
+            .describedAs("action should not execute because of delete entity")
+            .isEqualTo("")
     }
 
     fun registerAfterSendMessageActionCompleted() {

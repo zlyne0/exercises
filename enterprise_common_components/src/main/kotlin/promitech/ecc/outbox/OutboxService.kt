@@ -60,11 +60,7 @@ class OutboxService(
      */
     @Transactional(propagation = Propagation.MANDATORY)
     fun <T: Any> send(objectData: T): OutboxEntityId {
-        outboxRegistryService.loadConfiguration(objectData)
-
-        val jsonId = jsonService.saveObject(objectData)
-        val outboxEntity = repository.create(jsonId, objectData::class.java.name)
-        val outboxEntityId = outboxEntity.id
+        val outboxEntityId = saveObjectData(objectData)
 
         TransactionSynchronizationManager.registerSynchronization(object : TransactionSynchronization {
             override fun afterCommit() {
@@ -76,6 +72,23 @@ class OutboxService(
             }
         })
         return outboxEntityId
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    fun <T: Any> saveObjectData(objectData: T): OutboxEntityId {
+        outboxRegistryService.loadConfiguration(objectData)
+        val jsonId = jsonService.saveObject(objectData)
+        val outboxEntity = repository.create(jsonId, objectData::class.java.name)
+        return outboxEntity.id
+    }
+
+    fun processIds() {
+        val allIds = transactionService.runInNewTransaction { repository.findAllIds() }
+        allIds.forEach { outboxEntityId ->
+            transactionService.runInNewTransaction {
+                sendSingleMessage(outboxEntityId)
+            }
+        }
     }
 
     private fun sendSingleMessage(outboxEntityId: OutboxEntityId) {
