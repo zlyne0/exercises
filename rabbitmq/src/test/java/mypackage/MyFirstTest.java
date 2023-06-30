@@ -6,7 +6,6 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.ReentrantLock;
 
-<<<<<<< HEAD
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.CancelCallback;
 import com.rabbitmq.client.Channel;
@@ -14,9 +13,6 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 import com.rabbitmq.client.Delivery;
-=======
-import com.rabbitmq.client.*;
->>>>>>> a908f76109701951d1c70e7e2bb8fd53d21e7ae5
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -36,13 +32,8 @@ import org.testcontainers.utility.DockerImageName;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class MyFirstTest {
 
-<<<<<<< HEAD
     public static final String MY_FIRST_EXCHANGE = "first.exchange";
     public static final String MY_FIRST_QUEUE = "first.queue";
-=======
-    public static final String MY_FIRST_EXCHANGE = "firstExchange";
-    public static final String MY_FIRST_QUEUE = "firstQueue";
->>>>>>> a908f76109701951d1c70e7e2bb8fd53d21e7ae5
     private static RabbitMQContainer container = new RabbitMQContainer(DockerImageName.parse("rabbitmq:3.7.25-management-alpine"));
 
     static String host = "localhost";
@@ -92,16 +83,10 @@ public class MyFirstTest {
             channel.queueDeclare("XXX", false, false, false, null);
 
             String message = "Hello World!";
-<<<<<<< HEAD
-            channel.basicPublish("", "XXX", null, message.getBytes());
-            AMQP.Confirm.SelectOk selectOk = channel.confirmSelect();
-            System.out.println("selectOk: " + selectOk);
-
-=======
+            //channel.basicPublish("", "XXX", null, message.getBytes());
             channel.basicPublish(MY_FIRST_EXCHANGE, "", null, message.getBytes());
             AMQP.Confirm.SelectOk selectOk = channel.confirmSelect();
             System.out.println("selectOk: " + selectOk);
->>>>>>> a908f76109701951d1c70e7e2bb8fd53d21e7ae5
             System.out.println(" [x] Sent '" + message + "'");
         }
     }
@@ -124,17 +109,6 @@ public class MyFirstTest {
         ) {
             channel.queueDeclare("XXX", false, false, false, null);
 
-<<<<<<< HEAD
-            channel.basicConsume("XXX", false, new DeliverCallback() {
-                @Override
-                public void handle(String consumerTag, Delivery delivery) throws IOException {
-                    String message = new String(delivery.getBody(), "UTF-8");
-                    channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
-
-                    System.out.println(" [x] consumerTag: " + consumerTag);
-                    System.out.println(" [x] Received '" + message + "'");
-                    semaphore.release();
-=======
             channel.basicConsume(MY_FIRST_QUEUE, false, new DeliverCallback() {
                 @Override
                 public void handle(String consumerTag, Delivery delivery) throws IOException {
@@ -146,7 +120,6 @@ public class MyFirstTest {
                         channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
                         semaphore.release();
                     }
->>>>>>> a908f76109701951d1c70e7e2bb8fd53d21e7ae5
                 }
             }, new CancelCallback() {
                 @Override
@@ -159,12 +132,5 @@ public class MyFirstTest {
             semaphore.acquire(1);
             System.out.println(" [*] get message and finish program");
         }
-<<<<<<< HEAD
-        System.out.println(" [*] Waiting for messages.");
-        semaphore.acquire(1);
-        System.out.println(" [*] get message and finish program");
-=======
-
->>>>>>> a908f76109701951d1c70e7e2bb8fd53d21e7ae5
     }
 }
