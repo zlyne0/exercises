@@ -50,6 +50,10 @@ public class Pesel {
         return LocalDate.of(century + year, month, day);
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public enum Sex {
         FEMALE, MALE
     }
@@ -70,16 +74,24 @@ public class Pesel {
             if (!pesel.matches("\\d+")) {
                 return ValidationResult.INVALID;
             }
-            int sum = 0;
-            for (int i = 0; i < pesel.length()-1; i++) {
-                sum += WEIGHTS[i] * Integer.parseInt(String.valueOf(pesel.charAt(i)));
-            }
-            int control = 10 - (sum % 10);
+            int control = calculateControl(pesel);
             int lastDigit = Integer.parseInt(String.valueOf(pesel.charAt(10)));
             if (lastDigit != control) {
                 return ValidationResult.INVALID;
             }
             return ValidationResult.VALID;
+        }
+
+        public static int calculateControl(String str) {
+            int sum = 0;
+            for (int i = 0; i < WEIGHTS.length; i++) {
+                sum += WEIGHTS[i] * Integer.parseInt(String.valueOf(str.charAt(i)));
+            }
+            int control = 10 - (sum % 10);
+            if (control == 10) {
+                return 0;
+            }
+            return control;
         }
     }
 

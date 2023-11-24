@@ -15,6 +15,7 @@ public class PeselTest {
             "1234567890a, INVALID",
             "98040477747, INVALID",
             "05252442983, VALID",
+            "52052872490, VALID",
             "98040477748, VALID"
     })
     void should_validate_pesel(String pesel, Pesel.ValidationResult result) {
@@ -49,5 +50,25 @@ public class PeselTest {
     })
     void should_extract_birth_date(String pesel, String dateStr) {
         assertThat(new Pesel(pesel).extractBirthDate()).isEqualTo(LocalDate.parse(dateStr));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1925-08-21",
+            "1978-06-01",
+            "1952-05-28",
+            "2079-03-03",
+            "2039-07-14",
+            "2006-04-16"
+    })
+    void shouldGenerateValidPesel(String dateStr) {
+        // given
+        LocalDate date = LocalDate.parse(dateStr);
+
+        // when
+        Pesel pesel = RandomPeselGenerator.nextPesel(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+
+        // then
+        assertThat(pesel.isValid()).describedAs("invalid pesel: " + pesel.getValue()).isTrue();
     }
 }
