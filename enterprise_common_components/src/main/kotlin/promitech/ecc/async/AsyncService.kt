@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.function.Supplier
 
 class AsyncService(
     private val threadPoolNumber: Int = 10,
@@ -50,4 +51,36 @@ class AsyncService(
         }
     }
 
+    fun runInParallel(jobRegistry: JobRegistry) {
+        for (pair in jobRegistry.pairs) {
+            val supplier = pair.first
+            val completableFuture = pair.second
+            executorThreadPool.submit {
+                try {
+                    completableFuture.complete(supplier.get())
+                } catch (exception: RuntimeException) {
+                    completableFuture.completeExceptionally(exception)
+                }
+            }
+        }
+        for (pair in jobRegistry.pairs) {
+            val completableFuture = pair.second
+            try {
+                completableFuture.join()
+            } catch (completionException: CompletionException) {
+                println(completionException)
+            }
+        }
+    }
+
+    class JobRegistry {
+        internal val pairs = ArrayList<Pair<Supplier<Any>, CompletableFuture<Any>>>()
+
+        @Suppress("UNCHECKED_CAST")
+        fun <T : Any> registerWait(supplier: Supplier<T>): CompletableFuture<T> {
+            val completableFuture = CompletableFuture<Any>()
+            pairs.add(Pair(supplier as Supplier<Any>, completableFuture))
+            return completableFuture as CompletableFuture<T>
+        }
+    }
 }
