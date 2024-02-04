@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
+
+    <changeSet id="2024-02-04" author="Duncan Idaho">
+
+        <createTable tableName="param">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="param_id_pk" />
+            </column>
+            <column name="name" type="varchar(250)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="param_name_unq" />
+            </column>
+            <column name="param_value" type="varchar(250)">
+                <constraints nullable="false" />
+            </column>
+            <column name="active" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false" />
+            </column>
+            <column name="INSERT_DATE_TIME" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="UPDATE_DATE_TIME" type="datetime">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="param_seq" cycle="false" startValue="1000" />
+
+        <createTable tableName="param_properties">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="param_properties_id_pk" />
+            </column>
+            <column name="param_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="varchar(250)">
+                <constraints nullable="false" />
+            </column>
+            <column name="value" type="varchar(250)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="param_properties_seq" cycle="false" startValue="1000" />
+
+        <addForeignKeyConstraint baseColumnNames="param_id"
+                                 baseTableName="param_properties"
+                                 constraintName="fk_param_properties_param_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="param"/>
+
+    </changeSet>
+</databaseChangeLog>
