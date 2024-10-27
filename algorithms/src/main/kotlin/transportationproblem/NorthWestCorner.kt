@@ -16,25 +16,29 @@ class NorthWestCorner(
                         table[row][col] = shopsDemands[col]
                         shopsDemands[col] = 0
                         factorySupply[row] = 0
-                        zeroForShops(col, row)
-                        zeroForFactories(row, col)
+                        markNoMoreDemands(col)
+                        markNoMoreSupply(row)
                     } else if (factorySupply[row] > shopsDemands[col]) {
                         table[row][col] = shopsDemands[col]
                         factorySupply[row] -= shopsDemands[col]
                         shopsDemands[col] = 0
-                        zeroForShops(col, row)
+                        markNoMoreDemands(col)
                     } else if (shopsDemands[col] > factorySupply[row]) {
                         table[row][col] = factorySupply[row]
                         shopsDemands[col] -= factorySupply[row]
                         factorySupply[row] = 0
-                        zeroForFactories(row, col)
+                        markNoMoreSupply(row)
                     }
                 }
             }
         }
+        return sumCost()
+    }
+
+    private fun sumCost(): Int {
         var costSum = 0
-        for (row in 0 until tp.factoryCount) {
-            for (col in 0 until tp.shopsCount) {
+        for (row in 0 until table.size) {
+            for (col in 0 until table[row].size) {
                 val v = table[row][col]
                 if (v > 0) {
                     costSum += v * tp.costs[row][col]
@@ -44,30 +48,19 @@ class NorthWestCorner(
         return costSum
     }
 
-    private fun zeroForShops(col: Int, fromRow: Int) {
-        for (i in fromRow + 1 until tp.factoryCount) {
-            table[i][col] = 0
-        }
-    }
-
-    private fun zeroForFactories(row: Int, fromCol: Int) {
-        for (i in fromCol + 1 until tp.shopsCount) {
-            table[row][i] = 0
-        }
-    }
-
-    fun printTable() {
-        for (irow in 0 until tp.factoryCount) {
-            for (icol in 0 until tp.shopsCount) {
-                val v = table[irow][icol]
-                val s = if (v != -1) {
-                    v.toString()
-                } else {
-                    " "
-                }
-                print(" " + s)
+    private fun markNoMoreDemands(sourceCol: Int) {
+        for (i in 0 until table.size) {
+            if (table[i][sourceCol] == -1) {
+                table[i][sourceCol] = 0
             }
-            println()
+        }
+    }
+
+    private fun markNoMoreSupply(sourceRow: Int) {
+        for (i in 0 until table[sourceRow].size) {
+            if (table[sourceRow][i] == -1) {
+                table[sourceRow][i] = 0
+            }
         }
     }
 }
