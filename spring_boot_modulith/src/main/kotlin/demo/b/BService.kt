@@ -4,5 +4,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class BService {
-    fun echo() {}
+    fun echo() {
+        println("Echo from BService")
+        //KObject().someKFunctionality()
+    }
 }

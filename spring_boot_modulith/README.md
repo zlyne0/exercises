@@ -31,5 +31,12 @@ Modulith generuje dla takiej sytuacji oddzielne diagram. "domain2" jest oddzieln
 ![Spring modulith all components](/images/modulith-components.png)
 ![Spring modulith "domain" module with subpackage](/images/module-domain.png)
 
-Aby tą możliwość uzyskać napisałem własny documenter, klasa MyDocumenter która generuje diagram ze wszystkim modułami
+Aby tą możliwość uzyskać napisałem własny documenter, klasa MyDocumenter która generuje diagram ze wszystkim modułami.
+Dodatkowo zaznaczam które moduły składają się na submoduły. 
 ![Spring modulith all components](/images/c4-components-complete.png)
+
+Documenter potrafi wygenerować diagram z modułów tylko z tych które są kożeniami dla submodułów.
+`c4-components-roots-only.puml`
+
+Documenter ma przełącznik do generowania diagramu bez relacji.
+`c4-components-without-relations.puml`

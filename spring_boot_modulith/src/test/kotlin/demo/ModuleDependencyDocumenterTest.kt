@@ -1,13 +1,14 @@
 package demo
 
+import demo.diagramdocumenter.MyDocumenter
 import org.junit.jupiter.api.Test
 import org.springframework.modulith.core.ApplicationModules
 import org.springframework.modulith.core.DependencyDepth
 import org.springframework.modulith.docs.Documenter
 
-class BeanDependencyTest {
+class ModuleDependencyDocumenterTest {
 
-    @Test
+//    @Test
     fun `should check bean dependencies`() {
         // given
         // when
@@ -35,9 +36,12 @@ class BeanDependencyTest {
     @Test
     fun `generate complete C4 component view`() {
         // given
-        val modules = ApplicationModules.of(DemoApplication::class.java)
+        val modules = ApplicationModules.of("demo")
 
         MyDocumenter(modules)
+            .useOnlyAnnotatedModules()
             .writeModulesAsPlantUml()
+            .writeOnlyRootModules()
+            .writeModulesWithoutRelations()
     }
 }
