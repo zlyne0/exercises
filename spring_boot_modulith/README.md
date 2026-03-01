@@ -28,12 +28,12 @@ Te jako oddzielne subpackage są prezentowane jako jeden moduł o nazwie parenta
 Nie widzę żadnych ustawień zmiany tego typu zachowania.
 Modulith generuje dla takiej sytuacji oddzielne diagram. "domain2" jest oddzielnym modułem ale jako subpackage "domain". 
 
-![Spring modulith all components](/images/modulith-components.png)
-![Spring modulith "domain" module with subpackage](/images/module-domain.png)
+![Spring modulith all components](images/modulith-components.png)
+![Spring modulith "domain" module with subpackage](images/module-domain.png)
 
 Aby tą możliwość uzyskać napisałem własny documenter, klasa MyDocumenter która generuje diagram ze wszystkim modułami.
 Dodatkowo zaznaczam które moduły składają się na submoduły. 
-![Spring modulith all components](/images/c4-components-complete.png)
+![Spring modulith all components](images/c4-components-complete.png)
 
 Documenter potrafi wygenerować diagram z modułów tylko z tych które są kożeniami dla submodułów.
 `c4-components-roots-only.puml`
