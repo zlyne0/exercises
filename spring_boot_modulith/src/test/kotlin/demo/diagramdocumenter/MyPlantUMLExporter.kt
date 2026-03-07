@@ -47,7 +47,7 @@ class MyPlantUMLExporter(
         val id = idOf(component!!) + "_submodules"
 
         rectangleCounter++
-        writer.writeLine("rectangle \"_\" as \"$id\" #line.dashed {")
+        writer.writeLine("rectangle \"${module.displayName}\" as \"$id\" #line.dashed {")
         writer.indent()
 
         action()
@@ -119,10 +119,14 @@ set separator none
 top to bottom direction
 
 <style>
-  root {
-    BackgroundColor: #ffffff
-    FontColor: #444444
-  }
+    root {
+        BackgroundColor: #ffffff
+        FontColor: #444444
+    }
+    rectangle {
+        FontSize: 10
+        FontStyle: italic
+    }  
 </style>
 
 !include <C4/C4>
