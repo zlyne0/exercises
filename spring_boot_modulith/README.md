@@ -40,3 +40,8 @@ Documenter potrafi wygenerować diagram z modułów tylko z tych które są koż
 
 Documenter ma przełącznik do generowania diagramu bez relacji.
 `c4-components-without-relations.puml`
+
+### 3. Regóły architektoniczne w oparciu o archunit
+KotlinInternalArchTest - przykład weryfikacji że jeśli klasa jest kotlin internal to wszystkie jej
+wywołania powinny być z package w ktorym sie znajduje. Jest to pewnego rodzaju obejscie tego
+że w kotlin scope internal dotyczy modułu maven anieżeli package. 
