@@ -17,7 +17,7 @@ fun notBeCalledFromOutsidePackage(): ArchCondition<JavaClass> {
         ) {
             for (accessToSelf in item.accessesToSelf) {
                 if (isOuterPackage(accessToSelf.originOwner, item)) {
-                    events.add(SimpleConditionEvent.violated(accessToSelf, "Access to self: ${accessToSelf.originOwner} is in outer package than ${item}"))
+                    events.add(SimpleConditionEvent.violated(accessToSelf, "Access to self: ${item} is in outer package ${accessToSelf.originOwner}"))
                 }
             }
         }

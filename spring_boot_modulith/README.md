@@ -44,4 +44,7 @@ Documenter ma przełącznik do generowania diagramu bez relacji.
 ### 3. Regóły architektoniczne w oparciu o archunit
 KotlinInternalArchTest - przykład weryfikacji że jeśli klasa jest kotlin internal to wszystkie jej
 wywołania powinny być z package w ktorym sie znajduje. Jest to pewnego rodzaju obejscie tego
-że w kotlin scope internal dotyczy modułu maven anieżeli package. 
+że w kotlin scope internal dotyczy modułu maven anieżeli package.
+
+FacadeArchRule - przykład weryfikacji że jeśli w package "X" istnieje bean springowy Facade to odwołania z poza "X" do benów springowych w "X" 
+nie mogą istnieć, z wyjątkiem do Facade
